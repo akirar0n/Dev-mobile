@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="0dp"
+        android:text="@string/digite_o_primeiro_n_mero"
+        tools:ignore="VisualLintOverlap" />
+
+    <EditText
+        android:id="@+id/ednumero1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="0dp"
+        android:layout_marginTop="16dp"
+        android:ems="10"
+        android:hint="@string/embranco"
+        android:minHeight="48dp"
+        tools:ignore="Autofill,LabelFor,MissingConstraints,SpeakableTextPresentCheck,TextFields,VisualLintTextFieldSize" />
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="0dp"
+        android:layout_marginTop="84dp"
+        android:text="@string/digite_o_segundo_n_mero"
+        tools:ignore="MissingConstraints" />
+
+    <EditText
+        android:id="@+id/ednumero2"
+        android:layout_width="229dp"
+        android:layout_height="49dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="31dp"
+        android:layout_marginTop="108dp"
+        android:ems="10"
+        android:hint="@string/embranco"
+        android:inputType="text"
+        android:minHeight="48dp"
+        tools:ignore="Autofill,MissingConstraints,SpeakableTextPresentCheck" />
+
+    <Button
+        android:id="@+id/btsomar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="26dp"
+        android:layout_marginTop="188dp"
+        android:text="@string/somar"
+        tools:ignore="MissingConstraints" />
+
+</RelativeLayout>

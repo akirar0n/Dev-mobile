@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">CalculadoraBasica</string>
+    <string name="digite_o_primeiro_n_mero">DIgite o primeiro número:</string>
+    <string name="embranco"></string>
+    <string name="somar">Somar</string>
+    <string name="digite_o_segundo_n_mero">DIgite o segundo número:</string>
+</resources>
