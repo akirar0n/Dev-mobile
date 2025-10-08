@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">Troca de Telas</string>
+    <string name="voc_est_na_tela_principal">Você está na tela principal</string>
+    <string name="ir_para_a_tela_2">Ir para a tela 2</string>
+</resources>
