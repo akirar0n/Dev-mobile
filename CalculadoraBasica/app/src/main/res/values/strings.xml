@@ -4,4 +4,7 @@
     <string name="embranco"></string>
     <string name="somar">Somar</string>
     <string name="digite_o_segundo_n_mero">DIgite o segundo número:</string>
+    <string name="multiplicar">Multiplicar</string>
+    <string name="subtrair">Subtrair</string>
+    <string name="dividir">Dividir</string>
 </resources>

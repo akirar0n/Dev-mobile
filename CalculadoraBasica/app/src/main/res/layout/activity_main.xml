@@ -9,10 +9,12 @@
 
     <TextView
         android:id="@+id/textView2"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
-        android:layout_marginStart="0dp"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="5dp"
+        android:layout_marginTop="52dp"
         android:text="@string/digite_o_primeiro_n_mero"
         tools:ignore="VisualLintOverlap" />
 
@@ -22,8 +24,8 @@
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
-        android:layout_marginStart="0dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginStart="5dp"
+        android:layout_marginTop="86dp"
         android:ems="10"
         android:hint="@string/embranco"
         android:minHeight="48dp"
@@ -31,23 +33,23 @@
 
     <TextView
         android:id="@+id/textView"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
-        android:layout_marginStart="0dp"
-        android:layout_marginTop="84dp"
+        android:layout_marginStart="5dp"
+        android:layout_marginTop="161dp"
         android:text="@string/digite_o_segundo_n_mero"
         tools:ignore="MissingConstraints" />
 
     <EditText
         android:id="@+id/ednumero2"
-        android:layout_width="229dp"
-        android:layout_height="49dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
-        android:layout_marginStart="31dp"
-        android:layout_marginTop="108dp"
+        android:layout_marginStart="5dp"
+        android:layout_marginTop="209dp"
         android:ems="10"
         android:hint="@string/embranco"
         android:inputType="text"
@@ -56,13 +58,43 @@
 
     <Button
         android:id="@+id/btsomar"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
-        android:layout_marginStart="26dp"
-        android:layout_marginTop="188dp"
+        android:layout_marginStart="5dp"
+        android:layout_marginTop="278dp"
         android:text="@string/somar"
         tools:ignore="MissingConstraints" />
+
+    <Button
+        android:id="@+id/btmultiplicar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="5dp"
+        android:layout_marginTop="420dp"
+        android:text="@string/multiplicar" />
+
+    <Button
+        android:id="@+id/btsubtrair"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="5dp"
+        android:layout_marginTop="350dp"
+        android:text="@string/subtrair" />
+
+    <Button
+        android:id="@+id/btdividir"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="5dp"
+        android:layout_marginTop="496dp"
+        android:text="@string/dividir" />
 
 </RelativeLayout>
