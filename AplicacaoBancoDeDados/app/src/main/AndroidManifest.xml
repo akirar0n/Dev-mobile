@@ -13,6 +13,22 @@
         android:theme="@style/Theme.AplicacaoBancoDeDados"
         tools:targetApi="31">
         <activity
+            android:name=".ExcluirDados2Activity"
+            android:exported="false" />
+        <activity
+            android:name=".ExcluirDadosActivity2"
+            android:exported="false" />
+        <activity
+            android:name=".ExcluirDadosActivity"
+            android:exported="false" />
+        <activity
+            android:name=".AlterarDados2Activity"
+            android:exported="false"
+            android:theme="@style/Theme.AplicacaoBancoDeDados" />
+        <activity
+            android:name=".AlterarDadosActivity"
+            android:exported="false" />
+        <activity
             android:name=".ConsultaDadosActivity"
             android:exported="false" />
         <activity

@@ -25,8 +25,9 @@ public class GravaRegistros2Activity extends Activity {
         btvoltar = (Button) findViewById(R.id.btvoltar);
 
         ednome = (EditText) findViewById(R.id.ednome);
-        edtelefone = (EditText) findViewById(R.id.edemail);
-        edemail = (EditText) findViewById(R.id.edtelefone);
+        edtelefone = (EditText) findViewById(R.id.edtelefone);
+        edemail = (EditText) findViewById(R.id.edemail);
+
         try {
             db = openOrCreateDatabase("banco_dados",
                     Context.MODE_PRIVATE, null);
@@ -71,5 +72,13 @@ public class GravaRegistros2Activity extends Activity {
         dialogo.setMessage(str);
         dialogo.setNeutralButton("Ok", null);
         dialogo.show();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (db != null && db.isOpen()) {
+            db.close();
+        }
     }
 }

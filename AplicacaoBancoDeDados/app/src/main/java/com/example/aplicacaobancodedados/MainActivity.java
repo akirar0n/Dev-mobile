@@ -15,6 +15,9 @@ public class MainActivity extends AppCompatActivity {
     Button btcadastrardados;
     Button btcadastrardados2;
     Button btconsultardados;
+    Button btalterardados;
+    Button btalterardados2;
+    Button btexcluirdados;
     SQLiteDatabase db;
 
     @Override
@@ -26,6 +29,9 @@ public class MainActivity extends AppCompatActivity {
         btcadastrardados = findViewById(R.id.btcadastrardados);
         btcadastrardados2 = findViewById(R.id.btcadastrardados2);
         btconsultardados = findViewById(R.id.btconsultardados);
+        btalterardados = findViewById(R.id.btalterardados);
+        btalterardados2 = findViewById(R.id.btalterardados2);
+        btexcluirdados = findViewById(R.id.btexcluirdados);
 
         btcadastrardados.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -75,5 +81,40 @@ public class MainActivity extends AppCompatActivity {
                 MainActivity.this.startActivity(consultarDadosActivity);
             }
         });
+
+        btalterardados.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View args0){
+                Intent alterarDadosActivity = new Intent (MainActivity.this,
+                        AlterarDadosActivity.class);
+                MainActivity.this.startActivity(alterarDadosActivity);
+            }
+        });
+
+        btalterardados2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View args0){
+                Intent alterarDadosActivity2 = new Intent (MainActivity.this,
+                        AlterarDados2Activity.class);
+                MainActivity.this.startActivity(alterarDadosActivity2);
+            }
+        });
+
+        btexcluirdados.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent excluirDadosActivity = new Intent(MainActivity.this,
+                        ExcluirDadosActivity.class);
+                MainActivity.this.startActivity(excluirDadosActivity);
+            }
+        });
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (db != null && db.isOpen()) {
+            db.close();
+        }
     }
 }

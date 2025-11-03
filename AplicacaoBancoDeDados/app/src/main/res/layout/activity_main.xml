@@ -1,90 +1,214 @@
 <?xml version="1.0" encoding="utf-8"?>
+
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+
     android:layout_width="match_parent"
+
     android:layout_height="match_parent"
-    android:orientation="vertical" >
+    xmlns:tools="http://schemas.android.com/tools"
+
+    android:orientation="vertical">
+
+
 
     <LinearLayout
+
         android:layout_width="match_parent"
+
         android:layout_height="wrap_content"
+
         android:background="#3ba0e2" >
+
         <ImageView
+
             android:id="@+id/imageView1"
+
             android:layout_width="96dp"
+
             android:layout_height="96dp"
-            android:src="@drawable/icone_bd"
-            android:contentDescription="@string/todo" />
+
+            android:src="@drawable/icone_bd" />
+
         <TextView
+
             android:id="@+id/textView1"
+
             android:layout_width="wrap_content"
+
             android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceLarge"
-            />
+
+            android:textAppearance="?android:attr/textAppearanceLarge" />
 
         <LinearLayout
+
             android:id="@+id/layoutCorFundo"
+
             android:layout_width="fill_parent"
+
             android:layout_height="match_parent"
+
             android:background="#E5BE40"
+
             android:gravity="center" >
 
             <TextView
+
                 android:id="@+id/textView2"
+
                 android:layout_width="wrap_content"
+
                 android:layout_height="wrap_content"
-                android:text="@string/trabalhando_com_banco_de_dados_no_android"
+
+                android:text="Trabalhando com Banco de Dados no	Android"
+
                 android:textAppearance="?android:attr/textAppearanceLarge"
-                android:textColor="#546E7A" />
+
+                android:textColor="#ffffff" />
+
         </LinearLayout>
+
     </LinearLayout>
 
     <LinearLayout
+
         android:id="@+id/layoutImagemFundo"
+
         android:layout_width="match_parent"
+
         android:layout_height="fill_parent"
+
         android:orientation="vertical" >
 
         <TextView
-            android:id="@+id/textView3"
+
+            android:id="@+id/textView4"
+
             android:layout_width="wrap_content"
+
             android:layout_height="wrap_content"
-            android:text="@string/escolha_uma_das_op_es_abaixo"
+
+            android:text="Escolha uma das opções abaixo:"
+
             android:textAppearance="?android:attr/textAppearanceLarge"
+
             android:textSize="20sp" />
 
         <LinearLayout
+
             android:layout_width="match_parent"
+
             android:layout_height="fill_parent"
+
             android:gravity="center"
+
             android:orientation="vertical" >
 
             <Button
+
                 android:id="@+id/btcriarbanco"
-                android:layout_width="200dp"
-                android:layout_height="wrap_content"
-                android:text="@string/criar_banco_de_dados" />
 
-            <Button
-                android:id="@+id/btcadastrardados"
-                android:layout_width="200dp"
-                android:layout_height="wrap_content"
-                android:text="@string/cadastrar_dados"
-                tools:ignore="TextSizeCheck" />
+                android:layout_width="fill_parent"
 
-            <Button
-                android:id="@+id/btcadastrardados2"
-                android:layout_width="200dp"
                 android:layout_height="wrap_content"
-                android:text="@string/cadastrar_dados2" />
 
-            <Button
-                android:id="@+id/btconsultardados"
-                android:layout_width="200dp"
-                android:layout_height="wrap_content"
-                android:contentDescription="@string/consultar_dados"
-                android:text="Consultar Dados" />
+                android:text="Criar Banco de Dados"
+
+                android:textSize="15sp" />
+
+            <LinearLayout
+
+                android:layout_width="match_parent"
+
+                android:layout_height="wrap_content" >
+
+                <LinearLayout
+
+                    android:layout_width="160dp"
+
+                    android:layout_height="match_parent"
+
+                    android:gravity="center"
+
+                    android:orientation="vertical" >
+
+                    <Button
+
+                        android:id="@+id/btcadastrardados"
+
+                        android:layout_width="160dp"
+
+                        android:layout_height="wrap_content"
+
+                        android:text="Cadastrar Dados"
+
+                        android:textSize="15sp" />
+
+                    <Button
+
+                        android:id="@+id/btcadastrardados2"
+
+                        android:layout_width="160dp"
+
+                        android:layout_height="wrap_content"
+
+                        android:text="Cadastrar Dados (2ª Versão)"
+
+                        android:textSize="15sp" />
+
+                    <Button
+
+                        android:id="@+id/btconsultardados"
+
+                        android:layout_width="160dp"
+
+                        android:layout_height="wrap_content"
+
+                        android:text="Consultar Dados"
+
+                        android:textSize="15sp" />
+
+                    <Button
+
+                        android:id="@+id/btalterardados"
+
+                        android:layout_width="160dp"
+
+                        android:layout_height="wrap_content"
+
+                        android:text="Alterar Dados"
+
+                        android:textSize="15sp" />
+
+                    <Button
+
+                        android:id="@+id/btalterardados2"
+
+                        android:layout_width="160dp"
+
+                        android:layout_height="wrap_content"
+
+                        android:text="Alterar Dados (2ª Versão)"
+
+                        android:textSize="15sp" />
+
+                    <Button
+
+                        android:id="@+id/btexcluirdados"
+
+                        android:layout_width="160dp"
+
+                        android:layout_height="wrap_content"
+
+                        android:textSize="15sp"
+
+                        android:text="Excluir Dados" />
+
+                </LinearLayout>
+
+            </LinearLayout>
 
         </LinearLayout>
+
     </LinearLayout>
+
 </LinearLayout>

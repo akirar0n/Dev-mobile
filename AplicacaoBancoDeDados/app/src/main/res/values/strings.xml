@@ -1,23 +1,67 @@
 <resources>
+
     <string name="app_name">AplicacaoBancoDeDados</string>
+
+    <string name="first_fragment_label">Meu Primeiro Fragmento</string>
+
+    <string name="second_fragment_label">Meu Segundo Fragmento</string>
+
     <string name="trabalhando_com_banco_de_dados_no_android">Trabalhando com Banco de Dados no Android</string>
+
     <string name="escolha_uma_das_op_es_abaixo">Escolha uma das opções abaixo:</string>
+
     <string name="criar_banco_de_dados">Criar Banco de Dados</string>
+
     <string name="todo">TODO</string>
+
     <string name="cadastrar">Cadastrar</string>
+
     <string name="e_mail">E-Mail:</string>
+
     <string name="cadastro_de_usu_rio">Cadastro de Usuário</string>
+
     <string name="telefone">Telefone:</string>
+
     <string name="nome">Nome:</string>
+
     <string name="esta_aplica_o_ir_registrar_as_informa_es_do_usu_rio_no_banco_de_dados">Esta aplicação irá registrar as informações do usuário no Banco de Dados.</string>
+
     <string name="digite_seu_nome">Digite seu nome</string>
+
     <string name="digite_seu_telefone">Digite seu telefone</string>
+
     <string name="digite_seu_email">Digite seu email</string>
+
     <string name="cadastrar_dados">Cadastrar Dados</string>
+
     <string name="cadastrar_dados2">Cadastrar Dados (2ª Edição)</string>
-    <string name="consultar_dados" />
-    <string name="nomeConsulta" />
-    <string name="telefoneConsulta" />
-    <string name="emailConsulta" />
-    <string name="status" />
+
+    <string name="status">#status</string>
+
+    <string name="consultar_dados">Consultar Dados</string>
+
+    <string name="nomeConsulta">[Nome]</string>
+
+    <string name="telefoneConsulta">[Telefone]</string>
+
+    <string name="emailConsulta">[E-Mail]</string>
+
+    <string name="alterar_dados">Alterar Dados</string>
+
+    <string name="alterar_dados2">Alterar Dados (2ª Edição)</string>
+
+    <string name="nomeAltera">[Nome]</string>
+
+    <string name="telefoneAltera">[Telefone]</string>
+
+    <string name="emailAltera">[E-Mail]</string>
+
+    <string name="excluir_dados">Excluir Dados</string>
+
+    <string name="nomeColchetes">[Nome]</string>
+
+    <string name="telefoneColchetes">[Telefone]</string>
+
+    <string name="emailColchetes">[EMail]</string>
+
 </resources>
