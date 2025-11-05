@@ -1,0 +1,226 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fillViewport="true">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        tools:context=".AlterarLocs">
+
+        <TextView
+            android:id="@+id/tvTituloAlterar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="32dp"
+            android:text="Alterar Locação"
+            android:textAppearance="@style/TextAppearance.AppCompat.Large"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tvLabelTipoLoc"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:text="Tipo (ex: Casa, Apto):"
+            app:layout_constraintStart_toStartOf="@+id/edTipoLocAlt"
+            app:layout_constraintTop_toBottomOf="@+id/tvTituloAlterar" />
+
+        <EditText
+            android:id="@+id/edTipoLocAlt"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="32dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="32dp"
+            android:hint="Casa"
+            android:inputType="text"
+            android:minHeight="48dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tvLabelTipoLoc" />
+
+        <TextView
+            android:id="@+id/tvLabelTituloLoc"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="Título:"
+            app:layout_constraintStart_toStartOf="@+id/edTituloLocAlt"
+            app:layout_constraintTop_toBottomOf="@+id/edTipoLocAlt" />
+
+        <EditText
+            android:id="@+id/edTituloLocAlt"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:hint="Casa de praia com piscina"
+            android:inputType="textCapSentences"
+            android:minHeight="48dp"
+            app:layout_constraintEnd_toEndOf="@+id/edTipoLocAlt"
+            app:layout_constraintStart_toStartOf="@+id/edTipoLocAlt"
+            app:layout_constraintTop_toBottomOf="@+id/tvLabelTituloLoc" />
+
+        <TextView
+            android:id="@+id/tvLabelImagemLoc"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="Imagem (nome do arquivo):"
+            app:layout_constraintStart_toStartOf="@+id/edImagemLocAlt"
+            app:layout_constraintTop_toBottomOf="@+id/edTituloLocAlt" />
+
+        <EditText
+            android:id="@+id/edImagemLocAlt"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:hint="imagem_praia.png"
+            android:inputType="text"
+            android:minHeight="48dp"
+            app:layout_constraintEnd_toEndOf="@+id/edTipoLocAlt"
+            app:layout_constraintStart_toStartOf="@+id/edTipoLocAlt"
+            app:layout_constraintTop_toBottomOf="@+id/tvLabelImagemLoc" />
+
+        <TextView
+            android:id="@+id/tvLabelDescrLoc"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="Descrição:"
+            app:layout_constraintStart_toStartOf="@+id/edDescrLocAlt"
+            app:layout_constraintTop_toBottomOf="@+id/edImagemLocAlt" />
+
+        <EditText
+            android:id="@+id/edDescrLocAlt"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:gravity="top|start"
+            android:hint="Descrição detalhada do local..."
+            android:inputType="textMultiLine"
+            android:lines="3"
+            android:minHeight="48dp"
+            app:layout_constraintEnd_toEndOf="@+id/edTipoLocAlt"
+            app:layout_constraintStart_toStartOf="@+id/edTipoLocAlt"
+            app:layout_constraintTop_toBottomOf="@+id/tvLabelDescrLoc" />
+
+        <TextView
+            android:id="@+id/tvLabelPrecoLoc"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="Preço (por noite):"
+            app:layout_constraintStart_toStartOf="@+id/edPrecoLocAlt"
+            app:layout_constraintTop_toBottomOf="@+id/edDescrLocAlt" />
+
+        <EditText
+            android:id="@+id/edPrecoLocAlt"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:hint="250.00"
+            android:inputType="numberDecimal"
+            android:minHeight="48dp"
+            app:layout_constraintEnd_toEndOf="@+id/edTipoLocAlt"
+            app:layout_constraintStart_toStartOf="@+id/edTipoLocAlt"
+            app:layout_constraintTop_toBottomOf="@+id/tvLabelPrecoLoc" />
+
+        <TextView
+            android:id="@+id/tvLabelLocalLoc"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="Localização:"
+            app:layout_constraintStart_toStartOf="@+id/edLocalLocAlt"
+            app:layout_constraintTop_toBottomOf="@+id/edPrecoLocAlt" />
+
+        <EditText
+            android:id="@+id/edLocalLocAlt"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:hint="Cidade, Estado"
+            android:inputType="text"
+            android:minHeight="48dp"
+            app:layout_constraintEnd_toEndOf="@+id/edTipoLocAlt"
+            app:layout_constraintStart_toStartOf="@+id/edTipoLocAlt"
+            app:layout_constraintTop_toBottomOf="@+id/tvLabelLocalLoc" />
+
+        <TextView
+            android:id="@+id/tvLabelHospedesLoc"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="Qtd. Hóspedes:"
+            app:layout_constraintStart_toStartOf="@+id/edHospedesLocAlt"
+            app:layout_constraintTop_toBottomOf="@+id/edLocalLocAlt" />
+
+        <EditText
+            android:id="@+id/edHospedesLocAlt"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:hint="4"
+            android:inputType="number"
+            android:minHeight="48dp"
+            app:layout_constraintEnd_toEndOf="@+id/edTipoLocAlt"
+            app:layout_constraintStart_toStartOf="@+id/edTipoLocAlt"
+            app:layout_constraintTop_toBottomOf="@+id/tvLabelHospedesLoc" />
+
+        <TextView
+            android:id="@+id/tvLabelDispLoc"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="Disponibilidade (ex: Imediata):"
+            app:layout_constraintStart_toStartOf="@+id/edDispLocAlt"
+            app:layout_constraintTop_toBottomOf="@+id/edHospedesLocAlt" />
+
+        <EditText
+            android:id="@+id/edDispLocAlt"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:hint="Imediata"
+            android:inputType="text"
+            android:minHeight="48dp"
+            app:layout_constraintEnd_toEndOf="@+id/edTipoLocAlt"
+            app:layout_constraintStart_toStartOf="@+id/edTipoLocAlt"
+            app:layout_constraintTop_toBottomOf="@+id/tvLabelDispLoc" />
+
+        <Button
+            android:id="@+id/btCancelarAlterar"
+            style="?attr/materialButtonOutlinedStyle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="32dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginBottom="32dp"
+            android:text="Cancelar"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/btSalvarAlteracoes"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="@+id/edDispLocAlt"
+            app:layout_constraintTop_toBottomOf="@+id/edDispLocAlt" />
+
+        <Button
+            android:id="@+id/btSalvarAlteracoes"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:text="Salvar Alterações"
+            app:layout_constraintBottom_toBottomOf="@+id/btCancelarAlterar"
+            app:layout_constraintEnd_toEndOf="@+id/edDispLocAlt"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/btCancelarAlterar"
+            app:layout_constraintTop_toTopOf="@+id/btCancelarAlterar" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>

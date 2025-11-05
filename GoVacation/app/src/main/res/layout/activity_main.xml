@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
+
+    <ImageView
+    android:id="@+id/ivLogo"
+    android:layout_width="wrap_content"
+    android:layout_height="60dp"
+    android:layout_marginTop="64dp"
+    android:adjustViewBounds="true"
+    android:contentDescription="Logo GoVacation"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toTopOf="parent"
+    app:srcCompat="@drawable/govac" />
+
+    <TextView
+    android:id="@+id/tvTitle"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="32dp"
+    android:text="Bem-vindo ao GoVacation App"
+    android:textAppearance="@style/TextAppearance.AppCompat.Large"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toBottomOf="@+id/ivLogo" />
+
+    <TextView
+    android:id="@+id/tvEmailLabel"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="48dp"
+    android:text="Email:"
+    app:layout_constraintStart_toStartOf="@+id/edemail"
+    app:layout_constraintTop_toBottomOf="@+id/tvTitle" />
+
+    <EditText
+    android:id="@+id/edemail"
+    android:layout_width="0dp"
+    android:layout_height="wrap_content"
+    android:layout_marginStart="32dp"
+    android:layout_marginTop="8dp"
+    android:layout_marginEnd="32dp"
+    android:ems="10"
+    android:hint="seu.email@exemplo.com"
+    android:inputType="textEmailAddress"
+    android:minHeight="48dp"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toBottomOf="@+id/tvEmailLabel" />
+
+    <TextView
+    android:id="@+id/tvSenhaLabel"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="24dp"
+    android:text="Senha:"
+    app:layout_constraintStart_toStartOf="@+id/edsenha"
+    app:layout_constraintTop_toBottomOf="@+id/edemail" />
+
+    <EditText
+    android:id="@+id/edsenha"
+    android:layout_width="0dp"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="8dp"
+    android:autofillHints="password"
+    android:ems="10"
+    android:hint="Sua senha"
+    android:inputType="textPassword"
+    android:minHeight="48dp"
+    app:layout_constraintEnd_toEndOf="@+id/edemail"
+    app:layout_constraintStart_toStartOf="@+id/edemail"
+    app:layout_constraintTop_toBottomOf="@+id/tvSenhaLabel" />
+
+    <Button
+    android:id="@+id/btesquecisenha"
+    style="@style/Widget.MaterialComponents.Button.TextButton"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="4dp"
+    android:text="Esqueci minha senha"
+    android:textSize="12sp"
+    app:layout_constraintEnd_toEndOf="@+id/edsenha"
+    app:layout_constraintTop_toBottomOf="@+id/edsenha" />
+
+    <Button
+    android:id="@+id/btentrar"
+    android:layout_width="0dp"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="32dp"
+    android:text="Entrar"
+    app:layout_constraintEnd_toEndOf="@+id/edsenha"
+    app:layout_constraintStart_toStartOf="@+id/edsenha"
+    app:layout_constraintTop_toBottomOf="@+id/btesquecisenha" />
+
+    <Button
+    android:id="@+id/btcadastro"
+    style="?attr/materialButtonOutlinedStyle"
+    android:layout_width="0dp"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="16dp"
+    android:text="Não tenho cadastro"
+    app:layout_constraintEnd_toEndOf="@+id/btentrar"
+    app:layout_constraintStart_toStartOf="@+id/btentrar"
+    app:layout_constraintTop_toBottomOf="@+id/btentrar" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
