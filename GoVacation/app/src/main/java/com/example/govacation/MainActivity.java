@@ -61,7 +61,6 @@ public class MainActivity extends AppCompatActivity {
 
                 db = dbHelper.getWritableDatabase();
 
-                // 4. Cria o registro do admin
                 ContentValues adminValues = new ContentValues();
                 adminValues.put("tipousuario", 1);
                 adminValues.put("email", adminEmail);
@@ -80,7 +79,6 @@ public class MainActivity extends AppCompatActivity {
         } catch (Exception e) {
             Log.e("MainActivity", "Erro ao inserir admin padrão", e);
         } finally {
-            // 6. Fecha tudo
             if (cursor != null) {
                 cursor.close();
             }
@@ -140,7 +138,8 @@ public class MainActivity extends AppCompatActivity {
         try {
             db = dbHelper.getReadableDatabase();
 
-            String[] projection = {"nome", "tipousuario"};
+            String[] projection = {"idusuario", "nome", "tipousuario"};
+
             String selection = "email = ? AND senha = ?";
             String[] selectionArgs = {email, senha};
 
@@ -166,7 +165,7 @@ public class MainActivity extends AppCompatActivity {
                     intent = new Intent(MainActivity.this, GerenciamentoLocs.class);
                 } else if (tipoUsuario == 2) {
                     intent = new Intent(MainActivity.this, TelaHome.class);
-                    intent.putExtra("ID_USUARIO", idUsuario);
+                    intent.putExtra("ID_USUARIO", idUsuario); // idUsuario é necessário aqui
                 } else {
                     exibirAviso("Erro de Permissão", "Tipo de usuário desconhecido.");
                     return;
@@ -180,6 +179,7 @@ public class MainActivity extends AppCompatActivity {
             }
 
         } catch (Exception e) {
+            Log.e("MainActivity", "Erro ao tentar logar", e);
             exibirAviso("Erro no Banco", "Ocorreu um erro ao tentar logar: " + e.getMessage());
         } finally {
             if (cursor != null) {

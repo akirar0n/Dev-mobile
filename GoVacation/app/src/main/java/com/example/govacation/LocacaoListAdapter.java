@@ -16,14 +16,13 @@ public class LocacaoListAdapter extends ArrayAdapter<Locacao> {
 
     private Context mContext;
     private int mResource;
-    private ListarLocs mActivity; // Referência para a Activity
+    private ListarLocs mActivity;
 
     public LocacaoListAdapter(@NonNull Context context, int resource, @NonNull ArrayList<Locacao> objects) {
         super(context, resource, objects);
         this.mContext = context;
         this.mResource = resource;
 
-        // Salva a referência da Activity para poder chamar os métodos dela
         if (context instanceof ListarLocs) {
             this.mActivity = (ListarLocs) context;
         }
@@ -32,7 +31,6 @@ public class LocacaoListAdapter extends ArrayAdapter<Locacao> {
     @NonNull
     @Override
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
-        // Pega o objeto Locacao da posição atual
         Locacao locacao = getItem(position);
 
         if (convertView == null) {
@@ -40,7 +38,6 @@ public class LocacaoListAdapter extends ArrayAdapter<Locacao> {
             convertView = inflater.inflate(mResource, parent, false);
         }
 
-        // Linka os componentes do XML (list_item_locacao.xml)
         TextView tvTitulo = convertView.findViewById(R.id.tvTituloItem);
         TextView tvLocalizacao = convertView.findViewById(R.id.tvLocalizacaoItem);
         TextView tvPreco = convertView.findViewById(R.id.tvPrecoItem);
@@ -48,23 +45,18 @@ public class LocacaoListAdapter extends ArrayAdapter<Locacao> {
         ImageButton btnExcluir = convertView.findViewById(R.id.btnExcluirItem);
 
         if (locacao != null) {
-            // Popula os campos com os dados
             tvTitulo.setText(locacao.getTitulo());
             tvLocalizacao.setText(locacao.getLocalizacao());
 
-            // Formata o preço para R$
             String precoFormatado = String.format(new Locale("pt", "BR"), "R$ %.2f", locacao.getPreco());
             tvPreco.setText(precoFormatado);
 
-            // Pega o ID da locação
             long locacaoId = locacao.getIdloc();
 
-            // --- Define os cliques dos botões ---
             btnAlterar.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     if (mActivity != null) {
-                        // Chama o método "alterar" da Activity
                         mActivity.alterarLocacao(locacaoId);
                     }
                 }
@@ -74,7 +66,6 @@ public class LocacaoListAdapter extends ArrayAdapter<Locacao> {
                 @Override
                 public void onClick(View v) {
                     if (mActivity != null) {
-                        // Chama o método "excluir" da Activity
                         mActivity.excluirLocacao(locacaoId, locacao.getTitulo());
                     }
                 }

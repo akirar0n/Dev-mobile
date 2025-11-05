@@ -12,12 +12,10 @@ import androidx.appcompat.app.AppCompatActivity;
 
 public class CadastrarLocs extends AppCompatActivity {
 
-    // Componentes do Layout
     EditText edTipoLocCad, edTituloLocCad, edImagemLocCad, edDescrLocCad,
             edPrecoLocCad, edLocalLocCad, edHospedesLocCad, edDispLocCad;
     Button btSalvarCadastro, btCancelarCadastro;
 
-    // Banco de Dados
     BDHelper dbHelper;
 
     @Override
@@ -27,10 +25,8 @@ public class CadastrarLocs extends AppCompatActivity {
 
         dbHelper = new BDHelper(this);
 
-        // 1. Linkar componentes do XML
         inicializarComponentes();
 
-        // 2. Configurar os cliques dos botões
         configurarListeners();
     }
 
@@ -48,7 +44,6 @@ public class CadastrarLocs extends AppCompatActivity {
     }
 
     private void configurarListeners() {
-        // Botão Salvar
         btSalvarCadastro.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -56,17 +51,15 @@ public class CadastrarLocs extends AppCompatActivity {
             }
         });
 
-        // Botão Cancelar
         btCancelarCadastro.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                finish(); // Simplesmente fecha a tela e volta para a tela anterior
+                finish();
             }
         });
     }
 
     private void salvarLocacao() {
-        // 1. Pegar todos os dados dos EditTexts
         String tipo = edTipoLocCad.getText().toString().trim();
         String titulo = edTituloLocCad.getText().toString().trim();
         String imagem = edImagemLocCad.getText().toString().trim();
@@ -76,7 +69,6 @@ public class CadastrarLocs extends AppCompatActivity {
         String hospedesStr = edHospedesLocCad.getText().toString().trim();
         String disp = edDispLocCad.getText().toString().trim();
 
-        // 2. Validação
         if (tipo.isEmpty() || titulo.isEmpty() || precoStr.isEmpty() || local.isEmpty() || hospedesStr.isEmpty() || disp.isEmpty()) {
             exibirAviso("Campos Vazios", "Por favor, preencha todos os campos.");
             return;
@@ -85,7 +77,6 @@ public class CadastrarLocs extends AppCompatActivity {
         double preco;
         int hospedes;
 
-        // 3. Tenta converter os números
         try {
             preco = Double.parseDouble(precoStr);
         } catch (NumberFormatException e) {
@@ -102,7 +93,6 @@ public class CadastrarLocs extends AppCompatActivity {
             return;
         }
 
-        // 4. Lógica de INSERT
         SQLiteDatabase db = null;
         try {
             db = dbHelper.getWritableDatabase();
@@ -117,12 +107,11 @@ public class CadastrarLocs extends AppCompatActivity {
             values.put("qtdhospedes", hospedes);
             values.put("disp", disp);
 
-            // Executa o INSERT
             long newRowId = db.insert("locacoes", null, values);
 
             if (newRowId != -1) {
                 Toast.makeText(this, "Locação cadastrada com sucesso!", Toast.LENGTH_SHORT).show();
-                finish(); // Fecha a tela e volta para a lista (que vai se atualizar)
+                finish();
             } else {
                 exibirAviso("Erro", "Falha ao cadastrar locação.");
             }

@@ -30,11 +30,10 @@ public class ListarLocs extends AppCompatActivity {
         listViewLocacoes = findViewById(R.id.listViewLocacoes);
         btVoltarListar = findViewById(R.id.btVoltarListar);
 
-        // Botão para voltar à tela anterior (GerenciamentoLocs)
         btVoltarListar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                finish(); // Fecha a activity atual
+                finish();
             }
         });
     }
@@ -42,8 +41,6 @@ public class ListarLocs extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        // Carrega (ou recarrega) as locações toda vez que a tela
-        // fica visível (ex: depois de alterar ou cadastrar)
         carregarLocacoes();
     }
 
@@ -54,12 +51,10 @@ public class ListarLocs extends AppCompatActivity {
 
         try {
             db = dbHelper.getReadableDatabase();
-            // Query para buscar todas as locações
             cursor = db.query("locacoes", null, null, null, null, null, "titulo ASC"); // Ordena por título
 
             if (cursor.moveToFirst()) {
                 do {
-                    // Pega os dados de cada coluna da linha atual
                     long id = cursor.getLong(cursor.getColumnIndexOrThrow("idloc"));
                     String tipo = cursor.getString(cursor.getColumnIndexOrThrow("tipoloc"));
                     String titulo = cursor.getString(cursor.getColumnIndexOrThrow("titulo"));
@@ -70,7 +65,6 @@ public class ListarLocs extends AppCompatActivity {
                     int hospedes = cursor.getInt(cursor.getColumnIndexOrThrow("qtdhospedes"));
                     String disp = cursor.getString(cursor.getColumnIndexOrThrow("disp"));
 
-                    // Cria um objeto Locacao e adiciona na lista
                     listaLocacoes.add(new Locacao(id, tipo, titulo, img, descr, preco, local, hospedes, disp));
 
                 } while (cursor.moveToNext());
@@ -83,49 +77,33 @@ public class ListarLocs extends AppCompatActivity {
             if (db != null && db.isOpen()) db.close();
         }
 
-        // Configura o Adapter
         if (adapter == null) {
-            // Passa o layout de CADA ITEM da lista (list_item_locacao.xml)
             adapter = new LocacaoListAdapter(this, R.layout.list_item_locacao, listaLocacoes);
             listViewLocacoes.setAdapter(adapter);
         } else {
-            // Se o adapter já existe, apenas limpa e atualiza os dados
             adapter.clear();
             adapter.addAll(listaLocacoes);
             adapter.notifyDataSetChanged();
         }
     }
 
-    /**
-     * Este método é chamado pelo Adapter (LocacaoListAdapter)
-     * @param id O ID da locação a ser alterada
-     */
     public void alterarLocacao(long id) {
-        // TODO: Criar a Activity "AlterarLocacaoActivity.java" e seu layout
         Intent intent = new Intent(this, AlterarLocs.class);
-        // Passa o ID da locação para a próxima tela
         intent.putExtra("ID_LOCACAO", id);
         startActivity(intent);
     }
 
-    /**
-     * Este método é chamado pelo Adapter (LocacaoListAdapter)
-     * @param id O ID da locação a ser excluída
-     * @param titulo O título (apenas para mostrar na confirmação)
-     */
     public void excluirLocacao(long id, String titulo) {
-        // Cria um pop-up de confirmação para evitar exclusão acidental
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("Confirmar Exclusão")
                 .setMessage("Tem certeza que deseja excluir a locação '" + titulo + "'?")
                 .setPositiveButton("Sim", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        // Se o usuário clicar "Sim", executa a exclusão
                         realizarExclusao(id);
                     }
                 })
-                .setNegativeButton("Não", null) // "Não" apenas fecha o diálogo
+                .setNegativeButton("Não", null)
                 .show();
     }
 
@@ -133,11 +111,9 @@ public class ListarLocs extends AppCompatActivity {
         SQLiteDatabase db = null;
         try {
             db = dbHelper.getWritableDatabase();
-            // Define a cláusula WHERE
             String selection = "idloc = ?";
             String[] selectionArgs = {String.valueOf(id)};
 
-            // Executa o delete
             int count = db.delete("locacoes", selection, selectionArgs);
 
             if (count > 0) {

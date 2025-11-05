@@ -4,190 +4,182 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:fillViewport="true">
+    tools:context=".DetalhesReserva">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="24dp"
-        tools:context=".DetalhesReservaActivity">
+        android:paddingBottom="24dp"> <TextView
+        android:id="@+id/tvTituloDetalhe"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:text="Detalhes da Locação"
+        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
-        <!-- Detalhes da Locação -->
-        <TextView
-            android:id="@+id/tvDetalheTitulo"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:text="Título da Locação"
-            android:textAppearance="@style/TextAppearance.AppCompat.Display1"
-            android:textColor="?attr/colorPrimary"
-            android:textStyle="bold"
+        <ImageView
+            android:id="@+id/ivDetalheImagem"
+            android:layout_width="332dp"
+            android:layout_height="82dp"
+            android:layout_marginTop="16dp"
+            android:scaleType="centerCrop"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toBottomOf="@+id/tvTituloDetalhe"
+            tools:srcCompat="@drawable/govac" />
+
+        <TextView
+            android:id="@+id/tvDetalheTituloLoc"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="16dp"
+            android:text="Título da Locação"
+            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toStartOf="@+id/tvDetalhePreco"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/ivDetalheImagem" />
 
         <TextView
             android:id="@+id/tvDetalheLocal"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="4dp"
             android:text="Localização"
-            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tvDetalheTitulo" />
+            app:layout_constraintEnd_toEndOf="@+id/tvDetalheTituloLoc"
+            app:layout_constraintStart_toStartOf="@+id/tvDetalheTituloLoc"
+            app:layout_constraintTop_toBottomOf="@+id/tvDetalheTituloLoc" />
+
+        <TextView
+            android:id="@+id/tvDetalheHospedes"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:text="Até X hóspedes"
+            app:layout_constraintEnd_toEndOf="@+id/tvDetalheTituloLoc"
+            app:layout_constraintStart_toStartOf="@+id/tvDetalheTituloLoc"
+            app:layout_constraintTop_toBottomOf="@+id/tvDetalheLocal" />
 
         <TextView
             android:id="@+id/tvDetalhePreco"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
+            android:layout_marginEnd="16dp"
             android:text="R$ 0,00"
-            android:textAppearance="@style/TextAppearance.AppCompat.Large"
+            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+            android:textColor="?attr/colorPrimary"
             android:textStyle="bold"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tvDetalheLocal" />
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/tvDetalheTituloLoc" />
 
         <TextView
             android:id="@+id/tvDetalhePrecoLabel"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
             android:text="/ noite"
-            android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-            app:layout_constraintBottom_toBottomOf="@+id/tvDetalhePreco"
-            app:layout_constraintStart_toEndOf="@+id/tvDetalhePreco" />
-
-        <TextView
-            android:id="@+id/tvDetalheHospedes"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:text="Até X hóspedes"
-            app:layout_constraintStart_toStartOf="parent"
+            android:textSize="12sp"
+            app:layout_constraintEnd_toEndOf="@+id/tvDetalhePreco"
             app:layout_constraintTop_toBottomOf="@+id/tvDetalhePreco" />
 
         <TextView
-            android:id="@+id/tvDetalheDescricaoLabel"
-            android:layout_width="wrap_content"
+            android:id="@+id/tvDetalheDescr"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="24dp"
-            android:text="Descrição"
-            android:textStyle="bold"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="16dp"
+            android:text="Descrição completa da locação..."
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tvDetalheHospedes" />
 
         <TextView
-            android:id="@+id/tvDetalheDescricao"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:text="Descrição completa da locação..."
-            android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tvDetalheDescricaoLabel" />
-
-        <!-- Seção da Reserva -->
-        <View
-            android:id="@+id/divider"
-            android:layout_width="0dp"
-            android:layout_height="1dp"
-            android:layout_marginTop="24dp"
-            android:background="?android:attr/listDivider"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tvDetalheDescricao" />
-
-        <TextView
             android:id="@+id/tvLabelCheckin"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="24dp"
-            android:text="Check-in:"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/divider" />
+            android:text="Data de Check-in"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="@+id/tvDetalheDescr"
+            app:layout_constraintTop_toBottomOf="@+id/tvDetalheDescr" />
 
-        <TextView
-            android:id="@+id/tvDataCheckin"
+        <EditText
+            android:id="@+id/etDataCheckin"
+            style="@style/Widget.AppCompat.EditText"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:background="@drawable/bg_edittext_clickable"
-            android:hint="Selecionar data"
-            android:minHeight="48dp"
+            android:clickable="true"
+            android:focusable="false"
+            android:hint="Selecione a data de check-in"
             android:padding="12dp"
-            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="@+id/tvDetalheDescr"
+            app:layout_constraintStart_toStartOf="@+id/tvDetalheDescr"
             app:layout_constraintTop_toBottomOf="@+id/tvLabelCheckin" />
 
         <TextView
             android:id="@+id/tvLabelCheckout"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
-            android:text="Check-out:"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tvDataCheckin" />
+            android:text="Data de Check-out"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="@+id/etDataCheckin"
+            app:layout_constraintTop_toBottomOf="@+id/etDataCheckin" />
 
-        <TextView
-            android:id="@+id/tvDataCheckout"
+        <EditText
+            android:id="@+id/etDataCheckout"
+            style="@style/Widget.AppCompat.EditText"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:background="@drawable/bg_edittext_clickable"
-            android:hint="Selecionar data"
-            android:minHeight="48dp"
+            android:clickable="true"
+            android:enabled="false"
+            android:focusable="false"
+            android:hint="Selecione a data de check-out"
             android:padding="12dp"
-            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tvLabelCheckout" />
+            app:layout_constraintEnd_toEndOf="@+id/etDataCheckin"
+            app:layout_constraintStart_toStartOf="@+id/etDataCheckin"
+            app:layout_constraintTop_toBottomOf="@+id/tvLabelCheckout"
+            tools:enabled="true" />
 
         <TextView
-            android:id="@+id/tvLabelMetodoPag"
-            android:layout_width="wrap_content"
+            android:id="@+id/tvLabelPagamento"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
-            android:text="Método de Pagamento:"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tvDataCheckout" />
+            android:text="Método de Pagamento"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="@+id/etDataCheckout"
+            app:layout_constraintTop_toBottomOf="@+id/etDataCheckout" />
 
-        <EditText
-            android:id="@+id/edMetodoPag"
+        <Spinner
+            android:id="@+id/spinnerMetodoPag"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
-            android:hint="Ex: Cartão de Crédito"
-            android:inputType="text"
             android:minHeight="48dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tvLabelMetodoPag" />
+            app:layout_constraintEnd_toEndOf="@+id/etDataCheckout"
+            app:layout_constraintStart_toStartOf="@+id/etDataCheckout"
+            app:layout_constraintTop_toBottomOf="@+id/tvLabelPagamento" />
 
         <Button
-            android:id="@+id/btConfirmarReserva"
+            android:id="@+id/btnConfirmarReserva"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="32dp"
+            android:layout_marginTop="24dp"
             android:text="Confirmar Reserva"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/edMetodoPag" />
-
-        <Button
-            android:id="@+id/btVoltarDetalhes"
-            style="?attr/materialButtonOutlinedStyle"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:layout_marginBottom="24dp"
-            android:text="Voltar"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/btConfirmarReserva"
-            app:layout_constraintVertical_bias="0.0" />
+            app:layout_constraintEnd_toEndOf="@+id/spinnerMetodoPag"
+            app:layout_constraintStart_toStartOf="@+id/spinnerMetodoPag"
+            app:layout_constraintTop_toBottomOf="@+id/spinnerMetodoPag" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>

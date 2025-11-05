@@ -16,14 +16,11 @@ import java.util.Locale;
 
 public class AlterarLocs extends AppCompatActivity {
 
-    // Componentes do Layout
     EditText edTipoLocAlt, edTituloLocAlt, edImagemLocAlt, edDescrLocAlt,
             edPrecoLocAlt, edLocalLocAlt, edHospedesLocAlt, edDispLocAlt;
     Button btSalvarAlteracoes, btCancelarAlterar;
-
-    // Banco de Dados
     BDHelper dbHelper;
-    private long locacaoId = -1; // Armazena o ID da locação a ser alterada
+    private long locacaoId = -1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,24 +29,19 @@ public class AlterarLocs extends AppCompatActivity {
 
         dbHelper = new BDHelper(this);
 
-        // 1. Linkar componentes do XML
         inicializarComponentes();
 
-        // 2. Pegar o ID enviado pela ListarLocacoesActivity
         Intent intent = getIntent();
         locacaoId = intent.getLongExtra("ID_LOCACAO", -1);
 
         if (locacaoId == -1) {
-            // Se o ID não foi passado, é um erro.
             Toast.makeText(this, "Erro: ID da locação não encontrado.", Toast.LENGTH_LONG).show();
-            finish(); // Fecha a activity
+            finish();
             return;
         }
 
-        // 3. Carregar os dados existentes no formulário
         carregarDadosLocacao();
 
-        // 4. Configurar os cliques dos botões
         configurarListeners();
     }
 
@@ -75,21 +67,17 @@ public class AlterarLocs extends AppCompatActivity {
             String selection = "idloc = ?";
             String[] selectionArgs = {String.valueOf(locacaoId)};
 
-            // Busca a locação específica pelo ID
             cursor = db.query("locacoes", null, selection, selectionArgs, null, null, null);
 
             if (cursor != null && cursor.moveToFirst()) {
-                // Popula os campos com os dados do banco
                 edTipoLocAlt.setText(cursor.getString(cursor.getColumnIndexOrThrow("tipoloc")));
                 edTituloLocAlt.setText(cursor.getString(cursor.getColumnIndexOrThrow("titulo")));
                 edImagemLocAlt.setText(cursor.getString(cursor.getColumnIndexOrThrow("imagem")));
                 edDescrLocAlt.setText(cursor.getString(cursor.getColumnIndexOrThrow("descr")));
 
-                // Formata o preço e qtd de hóspedes para String
                 double preco = cursor.getDouble(cursor.getColumnIndexOrThrow("preco"));
                 int hospedes = cursor.getInt(cursor.getColumnIndexOrThrow("qtdhospedes"));
 
-                // Usamos Locale.US (ponto) para garantir que Double.parseDouble funcione
                 edPrecoLocAlt.setText(String.format(Locale.US, "%.2f", preco));
                 edHospedesLocAlt.setText(String.valueOf(hospedes));
 
@@ -97,7 +85,7 @@ public class AlterarLocs extends AppCompatActivity {
                 edDispLocAlt.setText(cursor.getString(cursor.getColumnIndexOrThrow("disp")));
             } else {
                 Toast.makeText(this, "Locação não encontrada.", Toast.LENGTH_SHORT).show();
-                finish(); // Volta se não encontrar a locação
+                finish();
             }
         } catch (Exception e) {
             exibirAviso("Erro", "Falha ao carregar dados: " + e.getMessage());
@@ -108,7 +96,6 @@ public class AlterarLocs extends AppCompatActivity {
     }
 
     private void configurarListeners() {
-        // Botão Salvar
         btSalvarAlteracoes.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -116,17 +103,15 @@ public class AlterarLocs extends AppCompatActivity {
             }
         });
 
-        // Botão Cancelar
         btCancelarAlterar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                finish(); // Simplesmente fecha a tela e volta para a lista
+                finish();
             }
         });
     }
 
     private void salvarAlteracoes() {
-        // 1. Pegar todos os dados dos EditTexts
         String tipo = edTipoLocAlt.getText().toString().trim();
         String titulo = edTituloLocAlt.getText().toString().trim();
         String imagem = edImagemLocAlt.getText().toString().trim();
@@ -136,7 +121,6 @@ public class AlterarLocs extends AppCompatActivity {
         String hospedesStr = edHospedesLocAlt.getText().toString().trim();
         String disp = edDispLocAlt.getText().toString().trim();
 
-        // 2. Validação (simples, igual ao cadastro)
         if (tipo.isEmpty() || titulo.isEmpty() || precoStr.isEmpty() || local.isEmpty() || hospedesStr.isEmpty() || disp.isEmpty()) {
             exibirAviso("Campos Vazios", "Por favor, preencha todos os campos obrigatórios.");
             return;
@@ -153,7 +137,6 @@ public class AlterarLocs extends AppCompatActivity {
             return;
         }
 
-        // 3. Lógica de UPDATE
         SQLiteDatabase db = null;
         try {
             db = dbHelper.getWritableDatabase();
@@ -168,16 +151,14 @@ public class AlterarLocs extends AppCompatActivity {
             values.put("qtdhospedes", hospedes);
             values.put("disp", disp);
 
-            // Define a cláusula WHERE para o UPDATE
             String whereClause = "idloc = ?";
             String[] whereArgs = {String.valueOf(locacaoId)};
 
-            // Executa o UPDATE
             int rowsAffected = db.update("locacoes", values, whereClause, whereArgs);
 
             if (rowsAffected > 0) {
                 Toast.makeText(this, "Locação alterada com sucesso!", Toast.LENGTH_SHORT).show();
-                finish(); // Fecha a tela e volta para a lista (que vai se atualizar)
+                finish();
             } else {
                 exibirAviso("Erro", "Nenhuma locação foi alterada. Verifique os dados.");
             }

@@ -1,20 +1,17 @@
 package com.example.govacation;
 
-// Classe "POJO" (Plain Old Java Object) para representar uma Locação
 public class Locacao {
 
-    // Campos da tabela
     private long idloc;
     private String tipoloc;
     private String titulo;
-    private String imagem; // Nota: No Android, é melhor salvar o CAMINHO da imagem
+    private String imagem;
     private String descr;
     private double preco;
     private String localizacao;
     private int qtdhospedes;
     private String disp;
 
-    // Construtor
     public Locacao(long idloc, String tipoloc, String titulo, String imagem, String descr, double preco, String localizacao, int qtdhospedes, String disp) {
         this.idloc = idloc;
         this.tipoloc = tipoloc;
@@ -27,7 +24,6 @@ public class Locacao {
         this.disp = disp;
     }
 
-    // Getters e Setters (necessários para o Adapter)
     public long getIdloc() { return idloc; }
     public void setIdloc(long idloc) { this.idloc = idloc; }
 
