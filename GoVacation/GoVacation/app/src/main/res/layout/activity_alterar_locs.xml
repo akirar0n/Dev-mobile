@@ -72,22 +72,30 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
-            android:text="Imagem (nome do arquivo):"
-            app:layout_constraintStart_toStartOf="@+id/edImagemLocAlt"
+            android:text="Imagem da Locação:"
+            app:layout_constraintStart_toStartOf="@+id/edTituloLocAlt"
             app:layout_constraintTop_toBottomOf="@+id/edTituloLocAlt" />
 
-        <EditText
-            android:id="@+id/edImagemLocAlt"
+        <ImageView
+            android:id="@+id/ivPreviewLocAlt"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="200dp"
             android:layout_marginTop="8dp"
-            android:hint="imagem_praia.png"
-            android:inputType="text"
-            android:minHeight="48dp"
-            app:layout_constraintEnd_toEndOf="@+id/edTipoLocAlt"
-            app:layout_constraintStart_toStartOf="@+id/edTipoLocAlt"
+            android:background="#E0E0E0"
+            android:scaleType="centerCrop"
+            app:layout_constraintEnd_toEndOf="@+id/edTituloLocAlt"
+            app:layout_constraintStart_toStartOf="@+id/edTituloLocAlt"
             app:layout_constraintTop_toBottomOf="@+id/tvLabelImagemLoc" />
 
+        <Button
+            android:id="@+id/btnEscolherImagemAlt"
+            style="?attr/materialButtonOutlinedStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="Alterar Imagem"
+            app:layout_constraintStart_toStartOf="@+id/ivPreviewLocAlt"
+            app:layout_constraintTop_toBottomOf="@+id/ivPreviewLocAlt" />
         <TextView
             android:id="@+id/tvLabelDescrLoc"
             android:layout_width="wrap_content"
@@ -95,7 +103,7 @@
             android:layout_marginTop="16dp"
             android:text="Descrição:"
             app:layout_constraintStart_toStartOf="@+id/edDescrLocAlt"
-            app:layout_constraintTop_toBottomOf="@+id/edImagemLocAlt" />
+            app:layout_constraintTop_toBottomOf="@+id/btnEscolherImagemAlt" />
 
         <EditText
             android:id="@+id/edDescrLocAlt"
@@ -180,21 +188,20 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
             android:text="Disponibilidade:"
-            app:layout_constraintStart_toStartOf="@+id/edDispLocAlt"
+            app:layout_constraintStart_toStartOf="@+id/spDispLocAlt"
             app:layout_constraintTop_toBottomOf="@+id/edHospedesLocAlt" />
 
-        <EditText
-            android:id="@+id/edDispLocAlt"
+        <Spinner
+            android:id="@+id/spDispLocAlt"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
-            android:hint="Imediata"
-            android:inputType="text"
             android:minHeight="48dp"
+            android:entries="@array/array_disponibilidade"
+            android:spinnerMode="dropdown"
             app:layout_constraintEnd_toEndOf="@+id/edTipoLocAlt"
             app:layout_constraintStart_toStartOf="@+id/edTipoLocAlt"
             app:layout_constraintTop_toBottomOf="@+id/tvLabelDispLoc" />
-
         <Button
             android:id="@+id/btCancelarAlterar"
             style="?attr/materialButtonOutlinedStyle"
@@ -207,8 +214,8 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/btSalvarAlteracoes"
             app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toStartOf="@+id/edDispLocAlt"
-            app:layout_constraintTop_toBottomOf="@+id/edDispLocAlt" />
+            app:layout_constraintStart_toStartOf="@+id/spDispLocAlt"
+            app:layout_constraintTop_toBottomOf="@+id/spDispLocAlt" />
 
         <Button
             android:id="@+id/btSalvarAlteracoes"
@@ -217,7 +224,7 @@
             android:layout_marginStart="8dp"
             android:text="Salvar Alterações"
             app:layout_constraintBottom_toBottomOf="@+id/btCancelarAlterar"
-            app:layout_constraintEnd_toEndOf="@+id/edDispLocAlt"
+            app:layout_constraintEnd_toEndOf="@+id/spDispLocAlt"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toEndOf="@+id/btCancelarAlterar"
             app:layout_constraintTop_toTopOf="@+id/btCancelarAlterar" />

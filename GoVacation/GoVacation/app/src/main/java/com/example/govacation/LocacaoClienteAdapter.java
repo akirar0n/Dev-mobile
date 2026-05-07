@@ -33,6 +33,7 @@ public class LocacaoClienteAdapter extends ArrayAdapter<Locacao> {
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
         Locacao locacao = getItem(position);
 
+
         if (convertView == null) {
             LayoutInflater inflater = LayoutInflater.from(mContext);
             convertView = inflater.inflate(mResource, parent, false);

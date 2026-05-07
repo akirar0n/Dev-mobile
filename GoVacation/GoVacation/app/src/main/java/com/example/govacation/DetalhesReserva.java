@@ -284,7 +284,7 @@ public class DetalhesReserva extends AppCompatActivity {
                 // Mapeia o metodo do Spinner para o enum exato da AbacatePay
                 String metodoApi;
                 switch (metodoPag) {
-                    case "Cartão de Crédito": metodoApi = "CREDIT_CARD"; break;
+                    case "Cartão de Crédito": metodoApi = "CARD"; break;
                     case "Cartão de Débito":  metodoApi = "DEBIT_CARD";  break;
                     default:                    metodoApi = "PIX";         break;
                 }

@@ -67,13 +67,22 @@
             app:layout_constraintStart_toStartOf="@+id/edTipoLocCad"
             app:layout_constraintTop_toBottomOf="@+id/tvLabelTituloLoc" />
 
+        <TextView
+            android:id="@+id/tvLabelImagemLoc"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="Imagem da Locação:"
+            app:layout_constraintStart_toStartOf="@+id/edTituloLocCad"
+            app:layout_constraintTop_toBottomOf="@+id/edTituloLocCad" />
+
         <ImageView
             android:id="@+id/ivPreviewLocacao"
             android:layout_width="0dp"
             android:layout_height="200dp"
             android:layout_marginTop="8dp"
-            android:scaleType="centerCrop"
             android:background="#E0E0E0"
+            android:scaleType="centerCrop"
             app:layout_constraintEnd_toEndOf="@+id/edTituloLocCad"
             app:layout_constraintStart_toStartOf="@+id/edTituloLocCad"
             app:layout_constraintTop_toBottomOf="@+id/tvLabelImagemLoc" />
@@ -87,7 +96,6 @@
             android:text="Abrir Galeria"
             app:layout_constraintStart_toStartOf="@+id/ivPreviewLocacao"
             app:layout_constraintTop_toBottomOf="@+id/ivPreviewLocacao" />
-
         <TextView
             android:id="@+id/tvLabelDescrLoc"
             android:layout_width="wrap_content"
@@ -95,7 +103,7 @@
             android:layout_marginTop="16dp"
             android:text="Descrição:"
             app:layout_constraintStart_toStartOf="@+id/edDescrLocCad"
-            app:layout_constraintTop_toBottomOf="@+id/edImagemLocCad" />
+            app:layout_constraintTop_toBottomOf="@+id/btnEscolherImagem" />
 
         <EditText
             android:id="@+id/edDescrLocCad"

@@ -26,13 +26,14 @@
             <category android:name="android.intent.category.LAUNCHER" />
         </intent-filter>
     </activity>
-    <activity android:name=".TelaCadastro" />
-    <activity android:name=".GerenciamentoLocs" />
-    <activity android:name=".TelaHome" />
-    <activity android:name=".DetalhesReserva" />
-    <activity android:name=".CadastrarLocs" />
-    <activity android:name=".ListarLocs" />
-    <activity android:name=".AlterarLocs" />
+        <activity android:name=".TelaCadastro" />
+        <activity android:name=".GerenciamentoLocs" />
+        <activity android:name=".TelaHome" />
+        <activity android:name=".DetalhesReserva" />
+        <activity android:name=".CadastrarLocs" />
+        <activity android:name=".ListarLocs" />
+        <activity android:name=".AlterarLocs" />
+        <activity android:name=".MinhasReservas" />
 
     </application>
 

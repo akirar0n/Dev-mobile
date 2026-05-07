@@ -4,11 +4,17 @@ import android.content.ContentValues;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.Spinner;
 import android.widget.Toast;
+
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -16,11 +22,29 @@ import java.util.Locale;
 
 public class AlterarLocs extends AppCompatActivity {
 
-    EditText edTipoLocAlt, edTituloLocAlt, edImagemLocAlt, edDescrLocAlt,
-            edPrecoLocAlt, edLocalLocAlt, edHospedesLocAlt, edDispLocAlt;
-    Button btSalvarAlteracoes, btCancelarAlterar;
+    EditText edTipoLocAlt, edTituloLocAlt, edDescrLocAlt,
+            edPrecoLocAlt, edLocalLocAlt, edHospedesLocAlt;
+    Spinner spDispLocAlt;
+    ImageView ivPreviewLocAlt;
+    Button btSalvarAlteracoes, btCancelarAlterar, btnEscolherImagemAlt;
+
     BDHelper dbHelper;
     private long locacaoId = -1;
+
+    // Variável para armazenar o caminho da imagem
+    private String stringUriImagem = "";
+
+    // Lançador moderno para abrir a galeria
+    private final ActivityResultLauncher<String> abridorDeGaleria = registerForActivityResult(
+            new ActivityResultContracts.GetContent(),
+            uri -> {
+                if (uri != null) {
+                    getContentResolver().takePersistableUriPermission(uri, Intent.FLAG_GRANT_READ_URI_PERMISSION);
+                    stringUriImagem = uri.toString();
+                    ivPreviewLocAlt.setImageURI(uri);
+                }
+            }
+    );
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,19 +65,22 @@ public class AlterarLocs extends AppCompatActivity {
         }
 
         carregarDadosLocacao();
-
         configurarListeners();
     }
 
     private void inicializarComponentes() {
         edTipoLocAlt = findViewById(R.id.edTipoLocAlt);
         edTituloLocAlt = findViewById(R.id.edTituloLocAlt);
-        edImagemLocAlt = findViewById(R.id.edImagemLocAlt);
         edDescrLocAlt = findViewById(R.id.edDescrLocAlt);
         edPrecoLocAlt = findViewById(R.id.edPrecoLocAlt);
         edLocalLocAlt = findViewById(R.id.edLocalLocAlt);
         edHospedesLocAlt = findViewById(R.id.edHospedesLocAlt);
-        edDispLocAlt = findViewById(R.id.edDispLocAlt);
+
+        // Componentes atualizados para adequação ao novo XML
+        spDispLocAlt = findViewById(R.id.spDispLocAlt);
+        ivPreviewLocAlt = findViewById(R.id.ivPreviewLocAlt);
+        btnEscolherImagemAlt = findViewById(R.id.btnEscolherImagemAlt);
+
         btSalvarAlteracoes = findViewById(R.id.btSalvarAlteracoes);
         btCancelarAlterar = findViewById(R.id.btCancelarAlterar);
     }
@@ -72,8 +99,8 @@ public class AlterarLocs extends AppCompatActivity {
             if (cursor != null && cursor.moveToFirst()) {
                 edTipoLocAlt.setText(cursor.getString(cursor.getColumnIndexOrThrow("tipoloc")));
                 edTituloLocAlt.setText(cursor.getString(cursor.getColumnIndexOrThrow("titulo")));
-                edImagemLocAlt.setText(cursor.getString(cursor.getColumnIndexOrThrow("imagem")));
                 edDescrLocAlt.setText(cursor.getString(cursor.getColumnIndexOrThrow("descr")));
+                edLocalLocAlt.setText(cursor.getString(cursor.getColumnIndexOrThrow("localizacao")));
 
                 double preco = cursor.getDouble(cursor.getColumnIndexOrThrow("preco"));
                 int hospedes = cursor.getInt(cursor.getColumnIndexOrThrow("qtdhospedes"));
@@ -81,8 +108,29 @@ public class AlterarLocs extends AppCompatActivity {
                 edPrecoLocAlt.setText(String.format(Locale.US, "%.2f", preco));
                 edHospedesLocAlt.setText(String.valueOf(hospedes));
 
-                edLocalLocAlt.setText(cursor.getString(cursor.getColumnIndexOrThrow("localizacao")));
-                edDispLocAlt.setText(cursor.getString(cursor.getColumnIndexOrThrow("disp")));
+                // 1. Carregando a Disponibilidade no Spinner
+                String dispBanco = cursor.getString(cursor.getColumnIndexOrThrow("disp"));
+                if ("Disponível".equalsIgnoreCase(dispBanco)) {
+                    spDispLocAlt.setSelection(0);
+                } else if ("Indisponível".equalsIgnoreCase(dispBanco)) {
+                    spDispLocAlt.setSelection(1);
+                }
+
+                // 2. Carregando a Imagem de forma mista (Antiga dos drawables vs Nova da Galeria)
+                String imagemBanco = cursor.getString(cursor.getColumnIndexOrThrow("imagem"));
+                stringUriImagem = imagemBanco != null ? imagemBanco : "";
+
+                if (stringUriImagem.startsWith("content://")) {
+                    // É uma foto da galeria salva recentemente
+                    ivPreviewLocAlt.setImageURI(Uri.parse(stringUriImagem));
+                } else {
+                    // É um texto antigo do seu protótipo (ex: "hotelpraia")
+                    int idImagem = getResources().getIdentifier(stringUriImagem, "drawable", getPackageName());
+                    if (idImagem != 0) {
+                        ivPreviewLocAlt.setImageResource(idImagem);
+                    }
+                }
+
             } else {
                 Toast.makeText(this, "Locação não encontrada.", Toast.LENGTH_SHORT).show();
                 finish();
@@ -96,6 +144,13 @@ public class AlterarLocs extends AppCompatActivity {
     }
 
     private void configurarListeners() {
+        btnEscolherImagemAlt.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                abridorDeGaleria.launch("image/*");
+            }
+        });
+
         btSalvarAlteracoes.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -114,17 +169,21 @@ public class AlterarLocs extends AppCompatActivity {
     private void salvarAlteracoes() {
         String tipo = edTipoLocAlt.getText().toString().trim();
         String titulo = edTituloLocAlt.getText().toString().trim();
-        String imagem = edImagemLocAlt.getText().toString().trim();
         String descr = edDescrLocAlt.getText().toString().trim();
         String precoStr = edPrecoLocAlt.getText().toString().trim();
         String local = edLocalLocAlt.getText().toString().trim();
         String hospedesStr = edHospedesLocAlt.getText().toString().trim();
-        String disp = edDispLocAlt.getText().toString().trim();
+        String disp = spDispLocAlt.getSelectedItem().toString(); // Coleta do Spinner
 
         if (tipo.isEmpty() || titulo.isEmpty() || precoStr.isEmpty() || local.isEmpty() || hospedesStr.isEmpty() || disp.isEmpty()) {
             exibirAviso("Campos Vazios", "Por favor, preencha todos os campos obrigatórios.");
             return;
         }
+
+//        if (stringUriImagem.isEmpty()) {
+//            exibirAviso("Imagem Ausente", "Por favor, defina uma imagem para a locação.");
+//            return;
+//        }
 
         double preco;
         int hospedes;
@@ -144,7 +203,7 @@ public class AlterarLocs extends AppCompatActivity {
             ContentValues values = new ContentValues();
             values.put("tipoloc", tipo);
             values.put("titulo", titulo);
-            values.put("imagem", imagem);
+            values.put("imagem", stringUriImagem); // Salva o novo ou antigo endereço da imagem
             values.put("descr", descr);
             values.put("preco", preco);
             values.put("localizacao", local);

@@ -30,6 +30,17 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/ivLogoHome" />
 
+    <Button
+        android:id="@+id/btnVerMinhasReservas"
+        style="?attr/materialButtonOutlinedStyle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        android:text="Histórico de Reservas"
+        app:layout_constraintTop_toBottomOf="@+id/tvTituloHome"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
     <ListView
         android:id="@+id/listViewLocacoesCliente"
         android:layout_width="0dp"
@@ -39,7 +50,7 @@
         app:layout_constraintBottom_toTopOf="@+id/btLogoutHome"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvTituloHome" />
+        app:layout_constraintTop_toBottomOf="@+id/btnVerMinhasReservas" />
 
     <Button
         android:id="@+id/btLogoutHome"
