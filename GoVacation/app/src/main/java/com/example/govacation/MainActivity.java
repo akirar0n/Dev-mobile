@@ -25,6 +25,7 @@ public class MainActivity extends AppCompatActivity {
 
         dbHelper = new BDHelper(this);
 
+        // Garante que o admin padrão existe com senha já hasheada
         inserirAdminPadrao();
 
         edemail = findViewById(R.id.edemail);
@@ -39,58 +40,55 @@ public class MainActivity extends AppCompatActivity {
     private void inserirAdminPadrao() {
         SQLiteDatabase db = null;
         Cursor cursor = null;
-        String adminEmail = "admin@govacation.com";
+        String adminEmail    = "admin@govacation.com";
+        String adminSenhaHash = CriptoUtil.hashSHA256("admin123");
 
         try {
-            db = dbHelper.getReadableDatabase();
+            db = dbHelper.getWritableDatabase();
 
-            String[] projection = {"idusuario"};
-            String selection = "email = ?";
+            String[] projection  = {"idusuario", "senha"};
+            String   selection   = "email = ?";
             String[] selectionArgs = {adminEmail};
 
-            cursor = db.query(
-                    "usuario",
-                    projection,
-                    selection,
-                    selectionArgs,
-                    null, null, null
-            );
+            cursor = db.query("usuario", projection, selection, selectionArgs, null, null, null);
 
             if (cursor == null || cursor.getCount() == 0) {
-                if(db != null) db.close();
-
-                db = dbHelper.getWritableDatabase();
-
+                // Admin não existe — cria com hash
                 ContentValues adminValues = new ContentValues();
                 adminValues.put("tipousuario", 1);
                 adminValues.put("email", adminEmail);
-                adminValues.put("senha", "admin123");
+                adminValues.put("senha", adminSenhaHash);
                 adminValues.put("nome", "Administrador");
                 adminValues.put("cpf", "000.000.000-00");
                 adminValues.put("endereco", "Sede GoVacation");
                 adminValues.put("telefone", "(00) 00000-0000");
-
                 db.insertWithOnConflict("usuario", null, adminValues, SQLiteDatabase.CONFLICT_IGNORE);
-                Log.i("MainActivity", "Usuário Administrador padrão criado.");
-            } else {
-                Log.i("MainActivity", "Usuário Administrador já existe.");
+                Log.i("MainActivity", "Admin criado com senha hasheada.");
+
+            } else if (cursor.moveToFirst()) {
+                String senhaSalva = cursor.getString(cursor.getColumnIndexOrThrow("senha"));
+
+                // ✅ MIGRAÇÃO: se a senha salva NÃO é o hash esperado, atualiza agora
+                // Isso corrige bancos criados antes da criptografia ser adicionada
+                if (!adminSenhaHash.equals(senhaSalva)) {
+                    ContentValues update = new ContentValues();
+                    update.put("senha", adminSenhaHash);
+                    db.update("usuario", update, "email = ?", new String[]{adminEmail});
+                    Log.i("MainActivity", "Senha do admin migrada para hash SHA-256.");
+                } else {
+                    Log.i("MainActivity", "Admin já possui senha hasheada.");
+                }
             }
 
         } catch (Exception e) {
-            Log.e("MainActivity", "Erro ao inserir admin padrão", e);
+            Log.e("MainActivity", "Erro ao configurar admin padrão", e);
         } finally {
-            if (cursor != null) {
-                cursor.close();
-            }
-            if (db != null && db.isOpen()) {
-                db.close();
-            }
+            if (cursor != null) cursor.close();
+            if (db != null && db.isOpen()) db.close();
         }
     }
 
-
     private void configurarListeners() {
-
         btentrar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -118,7 +116,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void tentarLogin() {
         String email = edemail.getText().toString().trim();
-        String senha = edsenha.getText().toString().trim();
+        String senhaDigitada = edsenha.getText().toString().trim();
 
         if (email.isEmpty()) {
             edemail.setError("Email é obrigatório");
@@ -126,11 +124,14 @@ public class MainActivity extends AppCompatActivity {
             return;
         }
 
-        if (senha.isEmpty()) {
+        if (senhaDigitada.isEmpty()) {
             edsenha.setError("Senha é obrigatória");
             edsenha.requestFocus();
             return;
         }
+
+        // ✅ SEGURANÇA: Converte a senha digitada para hash antes de comparar com o banco
+        String senhaHash = CriptoUtil.hashSHA256(senhaDigitada);
 
         SQLiteDatabase db = null;
         Cursor cursor = null;
@@ -139,19 +140,10 @@ public class MainActivity extends AppCompatActivity {
             db = dbHelper.getReadableDatabase();
 
             String[] projection = {"idusuario", "nome", "tipousuario"};
-
             String selection = "email = ? AND senha = ?";
-            String[] selectionArgs = {email, senha};
+            String[] selectionArgs = {email, senhaHash}; // ✅ Compara o hash, nunca o texto puro
 
-            cursor = db.query(
-                    "usuario",
-                    projection,
-                    selection,
-                    selectionArgs,
-                    null,
-                    null,
-                    null
-            );
+            cursor = db.query("usuario", projection, selection, selectionArgs, null, null, null);
 
             if (cursor != null && cursor.moveToFirst()) {
                 long idUsuario = cursor.getLong(cursor.getColumnIndexOrThrow("idusuario"));
@@ -165,7 +157,7 @@ public class MainActivity extends AppCompatActivity {
                     intent = new Intent(MainActivity.this, GerenciamentoLocs.class);
                 } else if (tipoUsuario == 2) {
                     intent = new Intent(MainActivity.this, TelaHome.class);
-                    intent.putExtra("ID_USUARIO", idUsuario); // idUsuario é necessário aqui
+                    intent.putExtra("ID_USUARIO", idUsuario);
                 } else {
                     exibirAviso("Erro de Permissão", "Tipo de usuário desconhecido.");
                     return;
@@ -182,14 +174,11 @@ public class MainActivity extends AppCompatActivity {
             Log.e("MainActivity", "Erro ao tentar logar", e);
             exibirAviso("Erro no Banco", "Ocorreu um erro ao tentar logar: " + e.getMessage());
         } finally {
-            if (cursor != null) {
-                cursor.close();
-            }
-            if (db != null && db.isOpen()) {
-                db.close();
-            }
+            if (cursor != null) cursor.close();
+            if (db != null && db.isOpen()) db.close();
         }
     }
+
     private void exibirAviso(String titulo, String mensagem) {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle(titulo)
@@ -198,4 +187,3 @@ public class MainActivity extends AppCompatActivity {
                 .show();
     }
 }
-

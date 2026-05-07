@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.Toast;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
@@ -13,7 +14,8 @@ import androidx.appcompat.app.AppCompatActivity;
 public class CadastrarLocs extends AppCompatActivity {
 
     EditText edTipoLocCad, edTituloLocCad, edImagemLocCad, edDescrLocCad,
-            edPrecoLocCad, edLocalLocCad, edHospedesLocCad, edDispLocCad;
+            edPrecoLocCad, edLocalLocCad, edHospedesLocCad;
+    Spinner spDispLocCad;
     Button btSalvarCadastro, btCancelarCadastro;
 
     BDHelper dbHelper;
@@ -38,7 +40,7 @@ public class CadastrarLocs extends AppCompatActivity {
         edPrecoLocCad = findViewById(R.id.edPrecoLocCad);
         edLocalLocCad = findViewById(R.id.edLocalLocCad);
         edHospedesLocCad = findViewById(R.id.edHospedesLocCad);
-        edDispLocCad = findViewById(R.id.edDispLocCad);
+        spDispLocCad = findViewById(R.id.spDispLocCad);
         btSalvarCadastro = findViewById(R.id.btSalvarCadastro);
         btCancelarCadastro = findViewById(R.id.btCancelarCadastro);
     }
@@ -67,7 +69,7 @@ public class CadastrarLocs extends AppCompatActivity {
         String precoStr = edPrecoLocCad.getText().toString().trim();
         String local = edLocalLocCad.getText().toString().trim();
         String hospedesStr = edHospedesLocCad.getText().toString().trim();
-        String disp = edDispLocCad.getText().toString().trim();
+        String disp = spDispLocCad.getSelectedItem().toString();
 
         if (tipo.isEmpty() || titulo.isEmpty() || precoStr.isEmpty() || local.isEmpty() || hospedesStr.isEmpty() || disp.isEmpty()) {
             exibirAviso("Campos Vazios", "Por favor, preencha todos os campos.");

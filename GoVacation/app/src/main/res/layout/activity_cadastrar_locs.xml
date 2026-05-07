@@ -67,26 +67,26 @@
             app:layout_constraintStart_toStartOf="@+id/edTipoLocCad"
             app:layout_constraintTop_toBottomOf="@+id/tvLabelTituloLoc" />
 
-        <TextView
-            android:id="@+id/tvLabelImagemLoc"
+        <ImageView
+            android:id="@+id/ivPreviewLocacao"
+            android:layout_width="0dp"
+            android:layout_height="200dp"
+            android:layout_marginTop="8dp"
+            android:scaleType="centerCrop"
+            android:background="#E0E0E0"
+            app:layout_constraintEnd_toEndOf="@+id/edTituloLocCad"
+            app:layout_constraintStart_toStartOf="@+id/edTituloLocCad"
+            app:layout_constraintTop_toBottomOf="@+id/tvLabelImagemLoc" />
+
+        <Button
+            android:id="@+id/btnEscolherImagem"
+            style="?attr/materialButtonOutlinedStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:text="Imagem (nome do arquivo):"
-            app:layout_constraintStart_toStartOf="@+id/edImagemLocCad"
-            app:layout_constraintTop_toBottomOf="@+id/edTituloLocCad" />
-
-        <EditText
-            android:id="@+id/edImagemLocCad"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
-            android:hint="imagem_praia.png"
-            android:inputType="text"
-            android:minHeight="48dp"
-            app:layout_constraintEnd_toEndOf="@+id/edTipoLocCad"
-            app:layout_constraintStart_toStartOf="@+id/edTipoLocCad"
-            app:layout_constraintTop_toBottomOf="@+id/tvLabelImagemLoc" />
+            android:text="Abrir Galeria"
+            app:layout_constraintStart_toStartOf="@+id/ivPreviewLocacao"
+            app:layout_constraintTop_toBottomOf="@+id/ivPreviewLocacao" />
 
         <TextView
             android:id="@+id/tvLabelDescrLoc"
@@ -179,18 +179,18 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
-            android:text="Disponibilidade (ex: Imediata):"
-            app:layout_constraintStart_toStartOf="@+id/edDispLocCad"
+            android:text="Disponibilidade:"
+            app:layout_constraintStart_toStartOf="@+id/spDispLocCad"
             app:layout_constraintTop_toBottomOf="@+id/edHospedesLocCad" />
 
-        <EditText
-            android:id="@+id/edDispLocCad"
+        <Spinner
+            android:id="@+id/spDispLocCad"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
-            android:hint="Imediata"
-            android:inputType="text"
             android:minHeight="48dp"
+            android:entries="@array/array_disponibilidade"
+            android:spinnerMode="dropdown"
             app:layout_constraintEnd_toEndOf="@+id/edTipoLocCad"
             app:layout_constraintStart_toStartOf="@+id/edTipoLocCad"
             app:layout_constraintTop_toBottomOf="@+id/tvLabelDispLoc" />
@@ -207,8 +207,8 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/btSalvarCadastro"
             app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toStartOf="@+id/edDispLocCad"
-            app:layout_constraintTop_toBottomOf="@+id/edDispLocCad" />
+            app:layout_constraintStart_toStartOf="@+id/spDispLocCad"
+            app:layout_constraintTop_toBottomOf="@+id/spDispLocCad" />
 
         <Button
             android:id="@+id/btSalvarCadastro"
@@ -217,7 +217,7 @@
             android:layout_marginStart="8dp"
             android:text="Cadastrar Locação"
             app:layout_constraintBottom_toBottomOf="@+id/btCancelarCadastro"
-            app:layout_constraintEnd_toEndOf="@+id/edDispLocCad"
+            app:layout_constraintEnd_toEndOf="@+id/spDispLocCad"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toEndOf="@+id/btCancelarCadastro"
             app:layout_constraintTop_toTopOf="@+id/btCancelarCadastro" />

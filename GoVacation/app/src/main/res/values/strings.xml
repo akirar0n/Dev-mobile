@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">GoVacation</string>
+    <string-array name="array_disponibilidade">
+        <item>Disponível</item>
+        <item>Indisponível</item>
+    </string-array>
 </resources>
