@@ -1,4 +1,4 @@
-package com.example.govacation;
+package com.example.govacation.adapter;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -9,6 +9,11 @@ import android.widget.Button;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+
+import com.example.govacation.R;
+import com.example.govacation.ui.client.TelaHome;
+import com.example.govacation.model.Locacao;
+
 import java.util.ArrayList;
 import java.util.Locale;
 

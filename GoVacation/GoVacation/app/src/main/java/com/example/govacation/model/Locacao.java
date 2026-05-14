@@ -1,4 +1,4 @@
-package com.example.govacation;
+package com.example.govacation.model;
 
 public class Locacao {
 

@@ -1,6 +1,7 @@
-package com.example.govacation;
+package com.example.govacation.data;
 
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
@@ -64,5 +65,27 @@ public class BDHelper extends SQLiteOpenHelper {
         db.execSQL("DROP TABLE IF EXISTS usuario");
 
         onCreate(db);
+    }
+
+    public boolean verificarUsuarioExistente(String cpf, String email) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        boolean existe = false;
+
+        // IMPORTANTE: Ajuste "usuarios", "cpf" e "email" para o nome EXATO
+        // da sua tabela e colunas no SQLiteStudio.
+        String sql = "SELECT id FROM usuarios WHERE cpf = ? OR email = ?";
+        String[] parametros = {cpf, email};
+
+        Cursor cursor = db.rawQuery(sql, parametros);
+
+        // Se o cursor tiver pelo menos um resultado, o CPF ou Email já existe
+        if (cursor.getCount() > 0) {
+            existe = true;
+        }
+
+        cursor.close();
+        db.close();
+
+        return existe;
     }
 }

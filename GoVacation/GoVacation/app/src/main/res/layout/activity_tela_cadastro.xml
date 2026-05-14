@@ -11,7 +11,7 @@
         android:id="@+id/main"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        tools:context=".TelaCadastro">
+        tools:context=".ui.auth.TelaCadastro">
 
         <ImageView
             android:id="@+id/ivLogo"

@@ -1,9 +1,8 @@
-package com.example.govacation;
+package com.example.govacation.ui.admin;
 
 import android.content.ContentValues;
 import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
-import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -16,6 +15,9 @@ import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.example.govacation.R;
+import com.example.govacation.data.BDHelper;
 
 public class CadastrarLocs extends AppCompatActivity {
 

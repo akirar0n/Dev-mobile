@@ -20,20 +20,20 @@
         android:theme="@style/Theme.GoVacation"
         android:networkSecurityConfig="@xml/network_security_config">
 
-    <activity android:name=".MainActivity" android:exported="true">
+    <activity android:name=".ui.auth.MainActivity" android:exported="true">
         <intent-filter>
             <action android:name="android.intent.action.MAIN" />
             <category android:name="android.intent.category.LAUNCHER" />
         </intent-filter>
     </activity>
-        <activity android:name=".TelaCadastro" />
-        <activity android:name=".GerenciamentoLocs" />
-        <activity android:name=".TelaHome" />
-        <activity android:name=".DetalhesReserva" />
-        <activity android:name=".CadastrarLocs" />
-        <activity android:name=".ListarLocs" />
-        <activity android:name=".AlterarLocs" />
-        <activity android:name=".MinhasReservas" />
+        <activity android:name=".ui.auth.TelaCadastro" />
+        <activity android:name=".ui.admin.GerenciamentoLocs" />
+        <activity android:name=".ui.client.TelaHome" />
+        <activity android:name=".ui.client.DetalhesReserva" />
+        <activity android:name=".ui.admin.CadastrarLocs" />
+        <activity android:name=".ui.admin.ListarLocs" />
+        <activity android:name=".ui.admin.AlterarLocs" />
+        <activity android:name=".ui.client.MinhasReservas" />
 
     </application>
 

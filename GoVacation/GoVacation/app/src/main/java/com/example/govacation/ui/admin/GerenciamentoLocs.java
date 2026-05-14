@@ -1,4 +1,4 @@
-package com.example.govacation;
+package com.example.govacation.ui.admin;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -6,6 +6,9 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.example.govacation.R;
+import com.example.govacation.ui.auth.MainActivity;
 import com.google.android.material.card.MaterialCardView;
 
 public class GerenciamentoLocs extends AppCompatActivity {

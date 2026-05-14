@@ -1,17 +1,19 @@
-package com.example.govacation;
+package com.example.govacation.ui.client;
 
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
-import android.view.View;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.example.govacation.R;
+import com.example.govacation.data.BDHelper;
 
 import java.util.ArrayList;
 import java.util.HashMap;

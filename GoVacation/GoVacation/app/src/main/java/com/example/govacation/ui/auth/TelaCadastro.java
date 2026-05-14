@@ -1,4 +1,4 @@
-package com.example.govacation;
+package com.example.govacation.ui.auth;
 
 import android.app.AlertDialog;
 import android.os.Bundle;
@@ -12,6 +12,10 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import android.os.Handler;
 import android.os.Looper;
+
+import com.example.govacation.R;
+import com.example.govacation.data.BDHelper;
+import com.example.govacation.util.CriptoUtil;
 
 public class TelaCadastro extends Activity {
     Button btcadastrar;
@@ -54,6 +58,24 @@ public class TelaCadastro extends Activity {
                         || senhaPlana.isEmpty() || cpf.isEmpty() || endereco.isEmpty()) {
                     MostraMensagem("Por favor, preencha todos os campos.");
                     return;
+                }
+                BDHelper bdHelper = new BDHelper(TelaCadastro.this);
+
+                // 3. EXECUTA A NOVA VALIDAÇÃO
+                if (bdHelper.verificarUsuarioExistente(cpf, email)) {
+                    // Se retornar TRUE, barra o cadastro e avisa o usuário
+                    MostraMensagem("Erro: CPF ou E-mail já estão em uso no GoVacation!");
+
+                    // Opcional: Limpa os campos para ele digitar de novo
+                    edcpf.setText("");
+                    edemail.setText("");
+                } else {
+                    // Se retornar FALSE, está tudo livre! Segue o fluxo normal de inserção.
+
+                    // ... (Seu código original que faz o INSERT usando ContentValues ou BDHelper entra aqui) ...
+
+                    MostraMensagem("Cadastro realizado com sucesso!");
+                    finish(); // Fecha a tela de cadastro
                 }
 
                 // ✅ SEGURANÇA: Gera o hash SHA-256 da senha ANTES de enviar para o background

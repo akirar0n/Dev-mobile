@@ -1,4 +1,4 @@
-package com.example.govacation;
+package com.example.govacation.util;
 
 import java.security.MessageDigest;
 

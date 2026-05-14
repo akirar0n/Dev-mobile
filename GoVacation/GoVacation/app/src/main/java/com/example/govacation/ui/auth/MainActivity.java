@@ -1,4 +1,4 @@
-package com.example.govacation;
+package com.example.govacation.ui.auth;
 
 import android.content.ContentValues;
 import android.content.Intent;
@@ -12,6 +12,12 @@ import android.widget.EditText;
 import android.widget.Toast;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.example.govacation.ui.admin.GerenciamentoLocs;
+import com.example.govacation.R;
+import com.example.govacation.ui.client.TelaHome;
+import com.example.govacation.data.BDHelper;
+import com.example.govacation.util.CriptoUtil;
 
 public class MainActivity extends AppCompatActivity {
     EditText edemail, edsenha;
