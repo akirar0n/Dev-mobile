@@ -69,22 +69,17 @@ public class BDHelper extends SQLiteOpenHelper {
 
     public boolean verificarUsuarioExistente(String cpf, String email) {
         SQLiteDatabase db = this.getReadableDatabase();
-        boolean existe = false;
 
-        // IMPORTANTE: Ajuste "usuarios", "cpf" e "email" para o nome EXATO
-        // da sua tabela e colunas no SQLiteStudio.
-        String sql = "SELECT id FROM usuarios WHERE cpf = ? OR email = ?";
-        String[] parametros = {cpf, email};
+        // Faz a busca. Onde tem '?' será substituído pelos valores do array
+        Cursor cursor = db.rawQuery(
+                "SELECT idusuario FROM usuario WHERE cpf = ? OR email = ?",
+                new String[]{cpf, email}
+        );
 
-        Cursor cursor = db.rawQuery(sql, parametros);
+        // Se o cursor tem mais de 0 linhas, significa que encontrou alguém
+        boolean existe = cursor.getCount() > 0;
 
-        // Se o cursor tiver pelo menos um resultado, o CPF ou Email já existe
-        if (cursor.getCount() > 0) {
-            existe = true;
-        }
-
-        cursor.close();
-        db.close();
+        cursor.close(); // Sempre feche o cursor para evitar vazamento de memória!
 
         return existe;
     }

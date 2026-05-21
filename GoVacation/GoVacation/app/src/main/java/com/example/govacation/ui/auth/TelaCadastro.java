@@ -50,41 +50,47 @@ public class TelaCadastro extends Activity {
                 final String nome      = ednome.getText().toString().trim();
                 final String telefone  = edtelefone.getText().toString().trim();
                 final String email     = edemail.getText().toString().trim();
-                final String senhaPlana = edsenha.getText().toString().trim(); // Lida na Main Thread
+                final String senhaPlana = edsenha.getText().toString().trim();
                 final String cpf       = edcpf.getText().toString().trim();
                 final String endereco  = edendereco.getText().toString().trim();
 
+                // 1. Validação de campos vazios
                 if (nome.isEmpty() || telefone.isEmpty() || email.isEmpty()
                         || senhaPlana.isEmpty() || cpf.isEmpty() || endereco.isEmpty()) {
                     MostraMensagem("Por favor, preencha todos os campos.");
                     return;
                 }
-                BDHelper bdHelper = new BDHelper(TelaCadastro.this);
-
-                // 3. EXECUTA A NOVA VALIDAÇÃO
-                if (bdHelper.verificarUsuarioExistente(cpf, email)) {
-                    // Se retornar TRUE, barra o cadastro e avisa o usuário
-                    MostraMensagem("Erro: CPF ou E-mail já estão em uso no GoVacation!");
-
-                    // Opcional: Limpa os campos para ele digitar de novo
-                    edcpf.setText("");
-                    edemail.setText("");
-                } else {
-                    // Se retornar FALSE, está tudo livre! Segue o fluxo normal de inserção.
-
-                    // ... (Seu código original que faz o INSERT usando ContentValues ou BDHelper entra aqui) ...
-
-                    MostraMensagem("Cadastro realizado com sucesso!");
-                    finish(); // Fecha a tela de cadastro
-                }
 
                 // ✅ SEGURANÇA: Gera o hash SHA-256 da senha ANTES de enviar para o background
-                // A senha em texto puro nunca é armazenada no banco de dados
                 final String senhaHash = CriptoUtil.hashSHA256(senhaPlana);
 
+                // Desabilita o botão temporariamente para evitar que o usuário clique duas vezes rápido
+                btcadastrar.setEnabled(false);
+
+                // Inicia o processamento em Background (fora da thread principal)
                 executor.execute(new Runnable() {
                     @Override
                     public void run() {
+                        // 2. VERIFICA SE O USUÁRIO EXISTE (agora rodando em background!)
+                        final boolean usuarioExiste = dbHelper.verificarUsuarioExistente(cpf, email);
+
+                        if (usuarioExiste) {
+                            // Se o usuário já existe, volta para a Thread Principal (UI) para mostrar o erro
+                            handler.post(new Runnable() {
+                                @Override
+                                public void run() {
+                                    MostraMensagem("Erro: CPF ou E-mail já estão em uso no GoVacation!");
+                                    edcpf.setText("");
+                                    edemail.setText("");
+                                    edcpf.requestFocus(); // Coloca o cursor de volta no CPF
+                                    btcadastrar.setEnabled(true); // Reabilita o botão
+                                }
+                            });
+
+                            return; // 🛑 INTERROMPE A THREAD AQUI. O código abaixo não será executado.
+                        }
+
+                        // 3. SE NÃO EXISTE, PROSSEGUE COM O INSERT
                         long newRowIdTemp = -1;
                         String erroTemp = null;
 
@@ -96,7 +102,7 @@ public class TelaCadastro extends Activity {
                             values.put("nome", nome);
                             values.put("telefone", telefone);
                             values.put("email", email);
-                            values.put("senha", senhaHash); // ✅ Salva o hash, nunca o texto puro
+                            values.put("senha", senhaHash); // Salva o hash
                             values.put("cpf", cpf);
                             values.put("endereco", endereco);
 
@@ -109,21 +115,19 @@ public class TelaCadastro extends Activity {
                         final long newRowId = newRowIdTemp;
                         final String erroCapturado = erroTemp;
 
+                        // 4. VOLTA PARA A THREAD PRINCIPAL PARA ATUALIZAR A TELA
                         handler.post(new Runnable() {
                             @Override
                             public void run() {
+                                btcadastrar.setEnabled(true); // Reabilita o botão
+
                                 if (erroCapturado != null) {
-                                    MostraMensagem("Erro: " + erroCapturado);
+                                    MostraMensagem("Erro no banco: " + erroCapturado);
                                 } else if (newRowId == -1) {
-                                    MostraMensagem("Erro ao cadastrar. Verifique se todos os campos estão preenchidos.");
+                                    MostraMensagem("Erro ao cadastrar. Verifique os dados.");
                                 } else {
                                     MostraMensagem("Cadastro realizado com sucesso!");
-                                    ednome.setText("");
-                                    edtelefone.setText("");
-                                    edemail.setText("");
-                                    edsenha.setText("");
-                                    edcpf.setText("");
-                                    edendereco.setText("");
+                                    finish(); // Fecha a tela e volta para a anterior
                                 }
                             }
                         });

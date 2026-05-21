@@ -19,3 +19,12 @@
 # If you keep the line number information, uncomment this to
 # hide the original source file name.
 #-renamesourcefileattribute SourceFile
+
+# Manter as classes de modelo intactas (evita que o ProGuard renomeie variáveis usadas no banco)
+-keep class com.example.govacation.model.** { *; }
+
+# Manter as classes de conexão com o banco de dados (SQLite)
+-keep class com.example.govacation.data.** { *; }
+
+# Manter classes utilitárias (como o CriptoUtil, para não quebrar a geração de Hash da senha)
+-keep class com.example.govacation.util.** { *; }
