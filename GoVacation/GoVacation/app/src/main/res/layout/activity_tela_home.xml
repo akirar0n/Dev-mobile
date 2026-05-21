@@ -53,6 +53,21 @@
         app:layout_constraintTop_toBottomOf="@+id/btnVerMinhasReservas" />
 
     <Button
+        android:id="@+id/btnFalarNoWhatsApp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="16dp"
+        android:backgroundTint="#25D366"
+        android:elevation="6dp"
+        android:text="Suporte"
+        android:textColor="#FFFFFF"
+        android:textStyle="bold"
+        app:cornerRadius="24dp"
+        app:layout_constraintBottom_toBottomOf="@+id/listViewLocacoesCliente"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <Button
         android:id="@+id/btLogoutHome"
         style="@style/Widget.MaterialComponents.Button.OutlinedButton"
         android:layout_width="0dp"

@@ -16,13 +16,18 @@ import com.example.govacation.data.BDHelper;
 import com.example.govacation.model.Locacao;
 import com.example.govacation.ui.auth.MainActivity;
 
+import android.content.ActivityNotFoundException;
+import android.content.Intent;
+import android.net.Uri;
+import android.widget.Toast;
+
 import java.util.ArrayList;
 
 public class TelaHome extends AppCompatActivity {
 
     ListView listViewLocacoesCliente;
     Button btLogoutHome;
-    Button btnVerMinhasReservas; // 1. Declaração do novo botão
+    Button btnVerMinhasReservas;
     BDHelper dbHelper;
     ArrayList<Locacao> listaLocacoes;
     LocacaoClienteAdapter adapter;
@@ -37,7 +42,6 @@ public class TelaHome extends AppCompatActivity {
         listViewLocacoesCliente = findViewById(R.id.listViewLocacoesCliente);
         btLogoutHome = findViewById(R.id.btLogoutHome);
 
-        // 2. Conecta o botão do layout (Verifique se o ID no seu activity_tela_home.xml é esse mesmo)
         btnVerMinhasReservas = findViewById(R.id.btnVerMinhasReservas);
 
         idUsuarioLogado = getIntent().getLongExtra("ID_USUARIO", -1);
@@ -52,13 +56,24 @@ public class TelaHome extends AppCompatActivity {
             }
         });
 
-        // 3. Ação do novo botão de Histórico / Minhas Reservas
+        Button btnFalarNoWhatsApp = findViewById(R.id.btnFalarNoWhatsApp);
+
+        btnFalarNoWhatsApp.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String numeroAdmin = "5511995008900";
+
+                String mensagem = "Olá! Gostaria de tirar algumas dúvidas sobre a locação via GoVacation.";
+
+                abrirWhatsApp(numeroAdmin, mensagem);
+            }
+        });
+
         if (btnVerMinhasReservas != null) {
             btnVerMinhasReservas.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     Intent intent = new Intent(TelaHome.this, MinhasReservas.class);
-                    // Passa o ID na mochila para a tela de Minhas Reservas saber quem está logado
                     intent.putExtra("ID_USUARIO", idUsuarioLogado);
                     startActivity(intent);
                 }
@@ -69,8 +84,6 @@ public class TelaHome extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        // Toda vez que a tela for aberta ou reaberta (ex: voltando da tela de detalhes),
-        // recarrega a lista para manter as opções atualizadas.
         carregarLocacoesDisponiveis();
     }
 
@@ -113,9 +126,7 @@ public class TelaHome extends AppCompatActivity {
         } finally {
             if (cursor != null) cursor.close();
             if (db != null && db.isOpen()) db.close();
-        } // <- 4. AQUI HAVIA UM ERRO NO SEU CÓDIGO. A chave de fechamento do 'finally' estava faltando.
-
-        // 5. O Adapter é recriado ou atualizado com os dados limpos sem Memory Leak
+        }
         if (adapter == null) {
             adapter = new LocacaoClienteAdapter(this, R.layout.list_item_locacao_cliente, listaLocacoes);
             listViewLocacoesCliente.setAdapter(adapter);
@@ -132,4 +143,19 @@ public class TelaHome extends AppCompatActivity {
         intent.putExtra("ID_USUARIO", idUsuarioLogado);
         startActivity(intent);
     }
+
+    private void abrirWhatsApp(String telefone, String mensagemOpcional) {
+
+        String url = "https://api.whatsapp.com/send?phone=" + telefone + "&text=" + Uri.encode(mensagemOpcional);
+
+        Intent intent = new Intent(Intent.ACTION_VIEW);
+        intent.setData(Uri.parse(url));
+
+        try {
+            startActivity(intent);
+        } catch (ActivityNotFoundException e) {
+            Toast.makeText(this, "WhatsApp não está instalado neste dispositivo.", Toast.LENGTH_LONG).show();
+        }
+    }
+
 }

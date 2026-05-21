@@ -30,8 +30,6 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         dbHelper = new BDHelper(this);
-
-        // Garante que o admin padrão existe com senha já hasheada
         inserirAdminPadrao();
 
         edemail = findViewById(R.id.edemail);
@@ -59,7 +57,6 @@ public class MainActivity extends AppCompatActivity {
             cursor = db.query("usuario", projection, selection, selectionArgs, null, null, null);
 
             if (cursor == null || cursor.getCount() == 0) {
-                // Admin não existe — cria com hash
                 ContentValues adminValues = new ContentValues();
                 adminValues.put("tipousuario", 1);
                 adminValues.put("email", adminEmail);
@@ -74,8 +71,6 @@ public class MainActivity extends AppCompatActivity {
             } else if (cursor.moveToFirst()) {
                 String senhaSalva = cursor.getString(cursor.getColumnIndexOrThrow("senha"));
 
-                // ✅ MIGRAÇÃO: se a senha salva NÃO é o hash esperado, atualiza agora
-                // Isso corrige bancos criados antes da criptografia ser adicionada
                 if (!adminSenhaHash.equals(senhaSalva)) {
                     ContentValues update = new ContentValues();
                     update.put("senha", adminSenhaHash);
@@ -136,7 +131,6 @@ public class MainActivity extends AppCompatActivity {
             return;
         }
 
-        // ✅ SEGURANÇA: Converte a senha digitada para hash antes de comparar com o banco
         String senhaHash = CriptoUtil.hashSHA256(senhaDigitada);
 
         SQLiteDatabase db = null;

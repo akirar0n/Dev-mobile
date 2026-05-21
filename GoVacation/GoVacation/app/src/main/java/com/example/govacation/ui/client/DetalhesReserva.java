@@ -39,10 +39,6 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 public class DetalhesReserva extends AppCompatActivity {
-
-    // -----------------------------------------------------------------------
-    // ⚙️  CONFIGURAÇÃO — coloque aqui sua chave real do AbacatePay
-    // -----------------------------------------------------------------------
     private static final String ABACATEPAY_API_KEY = "abc_dev_MwqC1MGHgNeyatXMKUCUXHU5";
     private static final String ABACATEPAY_URL     = "https://api.abacatepay.com/v1/billing/create";
     // -----------------------------------------------------------------------
@@ -60,8 +56,6 @@ public class DetalhesReserva extends AppCompatActivity {
     private Calendar dataCheckoutSelecionada;
     private final SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd", Locale.US);
     private double precoDiaria = 0.0;
-
-    // Dados do cliente logado (carregados do BD para enviar à API)
     private String clienteNome     = "";
     private String clienteEmail    = "";
     private String clienteTelefone = "";
@@ -97,7 +91,7 @@ public class DetalhesReserva extends AppCompatActivity {
         btnConfirmarReserva  = findViewById(R.id.btnConfirmarReserva);
 
         carregarDetalhesLocacao();
-        carregarDadosCliente();      // ✅ Necessário para enviar ao AbacatePay
+        carregarDadosCliente();
         configurarSpinnerPagamento();
         configurarSeletoresData();
 
@@ -108,10 +102,6 @@ public class DetalhesReserva extends AppCompatActivity {
             }
         });
     }
-
-    // -----------------------------------------------------------------------
-    // Carregamento de dados
-    // -----------------------------------------------------------------------
 
     private void carregarDetalhesLocacao() {
         SQLiteDatabase db = null;
@@ -177,12 +167,7 @@ public class DetalhesReserva extends AppCompatActivity {
         }
     }
 
-    // -----------------------------------------------------------------------
-    // UI — Spinner e DatePickers
-    // -----------------------------------------------------------------------
-
     private void configurarSpinnerPagamento() {
-        // ✅ Apenas métodos suportados pela AbacatePay
         String[] metodos = {"Selecione um método...", "PIX", "Cartão de Crédito"};
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this,
                 android.R.layout.simple_spinner_item, metodos);
@@ -228,10 +213,6 @@ public class DetalhesReserva extends AppCompatActivity {
         dlg.show();
     }
 
-    // -----------------------------------------------------------------------
-    // Lógica de reserva e pagamento
-    // -----------------------------------------------------------------------
-
     private double calcularValorTotal() {
         if (dataCheckinSelecionada == null || dataCheckoutSelecionada == null) return 0.0;
         long difMs   = dataCheckoutSelecionada.getTimeInMillis() - dataCheckinSelecionada.getTimeInMillis();
@@ -273,7 +254,6 @@ public class DetalhesReserva extends AppCompatActivity {
         executorDeRede.execute(() -> {
             HttpURLConnection conexao = null;
             try {
-                // ✅ Endpoint correto da AbacatePay
                 URL url = new URL(ABACATEPAY_URL);
                 conexao = (HttpURLConnection) url.openConnection();
                 conexao.setRequestMethod("POST");
@@ -283,7 +263,6 @@ public class DetalhesReserva extends AppCompatActivity {
                 conexao.setConnectTimeout(15_000);
                 conexao.setReadTimeout(15_000);
 
-                // Mapeia o metodo do Spinner para o enum exato da AbacatePay
                 String metodoApi;
                 switch (metodoPag) {
                     case "Cartão de Crédito": metodoApi = "CARD"; break;
@@ -291,13 +270,10 @@ public class DetalhesReserva extends AppCompatActivity {
                     default:                    metodoApi = "PIX";         break;
                 }
 
-                // Valor em centavos (padrao financeiro)
                 int valorEmCentavos = (int) Math.round(valorTotal * 100);
 
-                // CPF sem pontuacao (AbacatePay exige apenas digitos)
                 String cpfLimpo = clienteCpf.replaceAll("[^0-9]", "");
 
-                // Telefone sem pontuacao
                 String telefoneLimpo = clienteTelefone.replaceAll("[^0-9]", "");
 
                 JSONObject produto = new JSONObject();
@@ -317,12 +293,9 @@ public class DetalhesReserva extends AppCompatActivity {
                 payload.put("methods", new org.json.JSONArray().put(metodoApi));
                 payload.put("products", new org.json.JSONArray().put(produto));
                 payload.put("customer", cliente);
-                // Redireciona o navegador apos o pagamento.
-                // Pode ser qualquer URL https valida enquanto nao houver site proprio.
                 payload.put("returnUrl",     "https://abacatepay.com");
                 payload.put("completionUrl", "https://abacatepay.com");
 
-                // Loga o payload exato para diagnostico
                 Log.d("AbacatePay", "Payload enviado: " + payload.toString());
 
                 // Envia o JSON
@@ -333,7 +306,6 @@ public class DetalhesReserva extends AppCompatActivity {
                 int codigoResposta = conexao.getResponseCode();
                 Log.d("AbacatePay", "HTTP " + codigoResposta);
 
-                // Código -1 = conexão falhou antes de chegar ao servidor
                 if (codigoResposta == -1) {
                     handlerDaTela.post(() ->
                             exibirAviso("Erro de Conexão",
@@ -346,7 +318,6 @@ public class DetalhesReserva extends AppCompatActivity {
                 }
 
                 if (codigoResposta >= 200 && codigoResposta < 300) {
-                    // ✅ Sucesso — lê a URL de pagamento da resposta
                     InputStream is = conexao.getInputStream();
                     Scanner s = new Scanner(is).useDelimiter("\\A");
                     String respostaJson = s.hasNext() ? s.next() : "";
@@ -354,29 +325,24 @@ public class DetalhesReserva extends AppCompatActivity {
 
                     JSONObject jsonResponse = new JSONObject(respostaJson);
 
-                    // ✅ Campo correto da AbacatePay: data.url
                     final String urlPagamento = jsonResponse
                             .getJSONObject("data")
                             .getString("url");
 
                     handlerDaTela.post(() -> {
-                        // ✅ Abre o navegador/app da AbacatePay para o cliente pagar
                         Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(urlPagamento));
                         startActivity(browserIntent);
 
-                        // Salva a reserva como pendente no BD local
                         efetivarReservaNoBanco(metodoPag);
                     });
 
                 } else {
-                    // Erro da API — loga o corpo para diagnóstico
                     InputStream err = conexao.getErrorStream();
                     Scanner s = new Scanner(err != null ? err : conexao.getInputStream())
                             .useDelimiter("\\A");
                     final String erroBody = s.hasNext() ? s.next() : "Sem detalhes";
                     Log.e("AbacatePay", "Erro HTTP " + codigoResposta + ": " + erroBody);
 
-                    // Extrai mensagem de erro do JSON da AbacatePay, se houver
                     String mensagemApi = erroBody;
                     try {
                         JSONObject errJson = new JSONObject(erroBody);
@@ -392,7 +358,6 @@ public class DetalhesReserva extends AppCompatActivity {
                 }
 
             } catch (java.net.UnknownHostException e) {
-                // DNS falhou — sem internet ou domínio errado
                 Log.e("AbacatePay", "Sem internet ou domínio inválido", e);
                 handlerDaTela.post(() ->
                         exibirAviso("Sem Conexão",
@@ -440,7 +405,6 @@ public class DetalhesReserva extends AppCompatActivity {
             if (rows == 0) throw new Exception("Falha ao atualizar status da locação.");
 
             db.setTransactionSuccessful();
-            // A tela de pagamento já foi aberta — aqui apenas confirmamos o registro local
             Log.i("DetalhesReserva", "Reserva #" + idReserva + " salva com sucesso.");
 
         } catch (Exception e) {

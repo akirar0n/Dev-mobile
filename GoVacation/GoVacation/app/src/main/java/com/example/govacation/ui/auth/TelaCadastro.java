@@ -54,43 +54,36 @@ public class TelaCadastro extends Activity {
                 final String cpf       = edcpf.getText().toString().trim();
                 final String endereco  = edendereco.getText().toString().trim();
 
-                // 1. Validação de campos vazios
                 if (nome.isEmpty() || telefone.isEmpty() || email.isEmpty()
                         || senhaPlana.isEmpty() || cpf.isEmpty() || endereco.isEmpty()) {
                     MostraMensagem("Por favor, preencha todos os campos.");
                     return;
                 }
 
-                // ✅ SEGURANÇA: Gera o hash SHA-256 da senha ANTES de enviar para o background
                 final String senhaHash = CriptoUtil.hashSHA256(senhaPlana);
 
-                // Desabilita o botão temporariamente para evitar que o usuário clique duas vezes rápido
                 btcadastrar.setEnabled(false);
 
-                // Inicia o processamento em Background (fora da thread principal)
                 executor.execute(new Runnable() {
                     @Override
                     public void run() {
-                        // 2. VERIFICA SE O USUÁRIO EXISTE (agora rodando em background!)
                         final boolean usuarioExiste = dbHelper.verificarUsuarioExistente(cpf, email);
 
                         if (usuarioExiste) {
-                            // Se o usuário já existe, volta para a Thread Principal (UI) para mostrar o erro
                             handler.post(new Runnable() {
                                 @Override
                                 public void run() {
                                     MostraMensagem("Erro: CPF ou E-mail já estão em uso no GoVacation!");
                                     edcpf.setText("");
                                     edemail.setText("");
-                                    edcpf.requestFocus(); // Coloca o cursor de volta no CPF
-                                    btcadastrar.setEnabled(true); // Reabilita o botão
+                                    edcpf.requestFocus();
+                                    btcadastrar.setEnabled(true);
                                 }
                             });
 
-                            return; // 🛑 INTERROMPE A THREAD AQUI. O código abaixo não será executado.
+                            return;
                         }
 
-                        // 3. SE NÃO EXISTE, PROSSEGUE COM O INSERT
                         long newRowIdTemp = -1;
                         String erroTemp = null;
 
@@ -102,7 +95,7 @@ public class TelaCadastro extends Activity {
                             values.put("nome", nome);
                             values.put("telefone", telefone);
                             values.put("email", email);
-                            values.put("senha", senhaHash); // Salva o hash
+                            values.put("senha", senhaHash);
                             values.put("cpf", cpf);
                             values.put("endereco", endereco);
 
@@ -115,11 +108,10 @@ public class TelaCadastro extends Activity {
                         final long newRowId = newRowIdTemp;
                         final String erroCapturado = erroTemp;
 
-                        // 4. VOLTA PARA A THREAD PRINCIPAL PARA ATUALIZAR A TELA
                         handler.post(new Runnable() {
                             @Override
                             public void run() {
-                                btcadastrar.setEnabled(true); // Reabilita o botão
+                                btcadastrar.setEnabled(true);
 
                                 if (erroCapturado != null) {
                                     MostraMensagem("Erro no banco: " + erroCapturado);
@@ -127,7 +119,7 @@ public class TelaCadastro extends Activity {
                                     MostraMensagem("Erro ao cadastrar. Verifique os dados.");
                                 } else {
                                     MostraMensagem("Cadastro realizado com sucesso!");
-                                    finish(); // Fecha a tela e volta para a anterior
+                                    finish();
                                 }
                             }
                         });

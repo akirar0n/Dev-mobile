@@ -34,11 +34,10 @@ public class MinhasReservas extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_minhas_reservas); // Layout da tela principal
+        setContentView(R.layout.activity_minhas_reservas);
 
         dbHelper = new BDHelper(this);
 
-        // INICIALIZAÇÃO OBRIGATÓRIA (Removido o comentário)
         lvMinhasReservas = findViewById(R.id.lvMinhasReservas);
         btVoltarReservas = findViewById(R.id.btVoltarReservas);
 
@@ -64,7 +63,6 @@ public class MinhasReservas extends AppCompatActivity {
             try {
                 db = dbHelper.getReadableDatabase();
 
-                // Relação SQL: Busca dados de duas tabelas diferentes
                 String query = "SELECT l.titulo, l.localizacao, r.datacheckin, r.datacheckout " +
                         "FROM reservas r " +
                         "INNER JOIN locacoes l ON r.idloc = l.idloc " +
@@ -75,7 +73,6 @@ public class MinhasReservas extends AppCompatActivity {
                 if (cursor.moveToFirst()) {
                     do {
                         HashMap<String, String> item = new HashMap<>();
-                        // Relacionando colunas do banco com chaves do Map
                         item.put("titulo", cursor.getString(0));
                         item.put("local", cursor.getString(1));
                         String periodo = "Check-in: " + cursor.getString(2) + " | Check-out: " + cursor.getString(3);
@@ -95,14 +92,13 @@ public class MinhasReservas extends AppCompatActivity {
                 if (dadosParaLista.isEmpty()) {
                     Toast.makeText(this, "Nenhuma reserva encontrada.", Toast.LENGTH_SHORT).show();
                 } else {
-                    // RELAÇÃO FINAL: Map -> Layout da Linha
                     String[] chavesOrigem = {"titulo", "local", "datas"};
                     int[] idsDestino = {R.id.tvTituloReserva, R.id.tvLocalReserva, R.id.tvDatasReserva};
 
                     SimpleAdapter adapter = new SimpleAdapter(
                             MinhasReservas.this,
                             dadosParaLista,
-                            R.layout.list_item_reserva, // USE O NOME DO ARQUIVO QUE VOCÊ CRIOU PARA A LINHA
+                            R.layout.list_item_reserva,
                             chavesOrigem,
                             idsDestino
                     );

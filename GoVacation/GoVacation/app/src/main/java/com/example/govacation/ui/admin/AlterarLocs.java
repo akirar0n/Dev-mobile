@@ -34,10 +34,8 @@ public class AlterarLocs extends AppCompatActivity {
     BDHelper dbHelper;
     private long locacaoId = -1;
 
-    // Variável para armazenar o caminho da imagem
     private String stringUriImagem = "";
 
-    // Lançador moderno para abrir a galeria
     private final ActivityResultLauncher<String> abridorDeGaleria = registerForActivityResult(
             new ActivityResultContracts.GetContent(),
             uri -> {
@@ -79,7 +77,6 @@ public class AlterarLocs extends AppCompatActivity {
         edLocalLocAlt = findViewById(R.id.edLocalLocAlt);
         edHospedesLocAlt = findViewById(R.id.edHospedesLocAlt);
 
-        // Componentes atualizados para adequação ao novo XML
         spDispLocAlt = findViewById(R.id.spDispLocAlt);
         ivPreviewLocAlt = findViewById(R.id.ivPreviewLocAlt);
         btnEscolherImagemAlt = findViewById(R.id.btnEscolherImagemAlt);
@@ -111,7 +108,6 @@ public class AlterarLocs extends AppCompatActivity {
                 edPrecoLocAlt.setText(String.format(Locale.US, "%.2f", preco));
                 edHospedesLocAlt.setText(String.valueOf(hospedes));
 
-                // 1. Carregando a Disponibilidade no Spinner
                 String dispBanco = cursor.getString(cursor.getColumnIndexOrThrow("disp"));
                 if ("Disponível".equalsIgnoreCase(dispBanco)) {
                     spDispLocAlt.setSelection(0);
@@ -119,15 +115,12 @@ public class AlterarLocs extends AppCompatActivity {
                     spDispLocAlt.setSelection(1);
                 }
 
-                // 2. Carregando a Imagem de forma mista (Antiga dos drawables vs Nova da Galeria)
                 String imagemBanco = cursor.getString(cursor.getColumnIndexOrThrow("imagem"));
                 stringUriImagem = imagemBanco != null ? imagemBanco : "";
 
                 if (stringUriImagem.startsWith("content://")) {
-                    // É uma foto da galeria salva recentemente
                     ivPreviewLocAlt.setImageURI(Uri.parse(stringUriImagem));
                 } else {
-                    // É um texto antigo do seu protótipo (ex: "hotelpraia")
                     int idImagem = getResources().getIdentifier(stringUriImagem, "drawable", getPackageName());
                     if (idImagem != 0) {
                         ivPreviewLocAlt.setImageResource(idImagem);
@@ -206,7 +199,7 @@ public class AlterarLocs extends AppCompatActivity {
             ContentValues values = new ContentValues();
             values.put("tipoloc", tipo);
             values.put("titulo", titulo);
-            values.put("imagem", stringUriImagem); // Salva o novo ou antigo endereço da imagem
+            values.put("imagem", stringUriImagem);
             values.put("descr", descr);
             values.put("preco", preco);
             values.put("localizacao", local);
