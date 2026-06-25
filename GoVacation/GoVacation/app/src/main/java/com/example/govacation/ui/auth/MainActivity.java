@@ -141,7 +141,7 @@ public class MainActivity extends AppCompatActivity {
 
             String[] projection = {"idusuario", "nome", "tipousuario"};
             String selection = "email = ? AND senha = ?";
-            String[] selectionArgs = {email, senhaHash}; // ✅ Compara o hash, nunca o texto puro
+            String[] selectionArgs = {email, senhaHash};
 
             cursor = db.query("usuario", projection, selection, selectionArgs, null, null, null);
 

@@ -61,7 +61,7 @@ public class TelaHome extends AppCompatActivity {
         btnFalarNoWhatsApp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String numeroAdmin = "5511995008900";
+                String numeroAdmin = "5561995008900";
 
                 String mensagem = "Olá! Gostaria de tirar algumas dúvidas sobre a locação via GoVacation.";
 

@@ -39,7 +39,7 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 public class DetalhesReserva extends AppCompatActivity {
-    private static final String ABACATEPAY_API_KEY = "abc_dev_MwqC1MGHgNeyatXMKUCUXHU5";
+    private static final String ABACATEPAY_API_KEY = "abc_dev_p4SFESsU05USkpUMws1CDc1g";
     private static final String ABACATEPAY_URL     = "https://api.abacatepay.com/v1/billing/create";
     // -----------------------------------------------------------------------
 
@@ -141,7 +141,6 @@ public class DetalhesReserva extends AppCompatActivity {
         }
     }
 
-    /** Carrega nome, e-mail, telefone e CPF do usuário logado para enviar ao AbacatePay. */
     private void carregarDadosCliente() {
         SQLiteDatabase db = null;
         Cursor cursor = null;
@@ -241,13 +240,6 @@ public class DetalhesReserva extends AppCompatActivity {
         iniciarPagamentoAPI(metodoPag, valorTotal);
     }
 
-    /**
-     * Monta o payload correto para a AbacatePay e abre a URL de pagamento no navegador.
-     *
-     * Formato exigido pela API:
-     *  - frequency, methods, products  → dados da cobrança
-     *  - customer                      → obrigatório pelo Banco Central para PIX
-     */
     private void iniciarPagamentoAPI(final String metodoPag, final double valorTotal) {
         Toast.makeText(this, "Gerando cobrança no AbacatePay…", Toast.LENGTH_SHORT).show();
 
@@ -378,7 +370,6 @@ public class DetalhesReserva extends AppCompatActivity {
         });
     }
 
-    /** Persiste a reserva no SQLite e marca a locação como indisponível. */
     private void efetivarReservaNoBanco(String metodoPag) {
         String dataCheckinSQL  = sdf.format(dataCheckinSelecionada.getTime());
         String dataCheckoutSQL = sdf.format(dataCheckoutSelecionada.getTime());
